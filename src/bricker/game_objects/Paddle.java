@@ -36,6 +36,10 @@ public class Paddle extends GameObject {
         if (inputListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
             movementDir = movementDir.add(Vector2.RIGHT);
         }
+//        if(getTopLeftCorner()<){
+//            setTopLeftCorner(movementDir);
+//        }
+        //TODO not get out of screen
         setVelocity(movementDir.mult(MOVEMENT_SPEED));
     }
 }

@@ -21,8 +21,7 @@ import java.util.Random;
 public class BrickerGameManager extends GameManager {
     private static final int BORDER_WIDTH = 10;
     private static final int PADDLE_HEIGHT = 20;
-    private static final int PADDLE_WIDTH = 200;
-
+    private static final int PADDLE_WIDTH = 150;
     private static final int INIT_LIVES = 3;
     private static final int BRICKS_IN_ROW = 8;
     private static final int BRICKS_IN_COL = 5;
@@ -170,14 +169,6 @@ public class BrickerGameManager extends GameManager {
 
             }
         }
-//        Paddle userPaddle = new Paddle(
-//
-//                Vector2.ZERO,
-//                new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT),
-//                paddleImage, inputListener);
-//        userPaddle.setCenter(
-//                new Vector2(windowDimensions.x() / 2, (int) windowDimensions.y() - 30));
-//        gameObjects().addGameObject(userPaddle);
     }
 
     private void askToPlayAgain(String prompt) {
@@ -185,14 +176,6 @@ public class BrickerGameManager extends GameManager {
             windowController.resetGame();
         else
             windowController.closeWindow();
-    }
-
-    private void gameLost() {
-        askToPlayAgain("lose!\nPlay again?");
-    }
-
-    private void gameWin() {
-        askToPlayAgain("win!\nPlay again?");
     }
 
     // TODO add paddle life
@@ -213,6 +196,10 @@ public class BrickerGameManager extends GameManager {
             //we win
 //            onBallFall();
             gameLost();
+        }
+        if (!prompt.isEmpty()) {
+            prompt += PLAY_AGAIN_ASKING_MSG;
+            askToPlayAgain(prompt);
         }
     }
 

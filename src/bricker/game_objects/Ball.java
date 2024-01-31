@@ -1,9 +1,5 @@
 package bricker.game_objects;
 
-// example of flipped the velocity of the ball
-//        Vector2 newVel = getVelocity().flipped(collision.getNormal());
-//        setVelocity(newVel);
-
 import danogl.GameObject;
 import danogl.collisions.Collision;
 import danogl.gui.Sound;

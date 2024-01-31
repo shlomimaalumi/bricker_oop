@@ -41,5 +41,6 @@ public class Paddle extends GameObject {
 //        }
         //TODO not get out of screen
         setVelocity(movementDir.mult(MOVEMENT_SPEED));
+
     }
 }

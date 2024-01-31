@@ -1,4 +1,10 @@
 package bricker.brick_strategies;
 
-public class BasicCollisionStrategy {
+import danogl.GameObject;
+
+public class BasicCollisionStrategy implements CollisionStrategy{
+    @Override
+    public void onCollision(GameObject thisObj, GameObject otherObj) {
+
+    }
 }

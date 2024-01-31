@@ -22,8 +22,8 @@ public class BrickerGameManager extends GameManager {
     private static final String PADDLE_IMG_PATH = "assets/paddle.png";
     private static final String BRICK_ING_PATH = "assets/brick.png";
     private static final String BALL_IMG_PATH = "assets/ball.png";
+    private static final String BACKGROUND_IMG_PATH = "assets/DARK_BG2_small.jpeg";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
-    private static final String BACKGROUND_IMG_PATH = "assets/DARK_BG2_small.png";
     private static final String WINDOW_TITLE = "bricker";
     private static final String WINNING_ANNOUNCEMENT = "win!\n";
     private static final String LOSING_ANNOUNCEMENT = "lose!\n";
@@ -123,7 +123,7 @@ public class BrickerGameManager extends GameManager {
         Paddle paddle = new Paddle(
                 Vector2.ZERO,
                 new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT),
-                paddleImage, inputListener);
+                paddleImage, inputListener,windowDimensions,BORDER_WIDTH);
         paddle.setCenter(
                 new Vector2(windowDimensions.x() / 2, (int) windowDimensions.y() - BASIC_SPACE));
         gameObjects().addGameObject(paddle);

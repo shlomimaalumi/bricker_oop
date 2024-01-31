@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 public class Paddle extends GameObject {
     private static final float MOVEMENT_SPEED = 400;
     private UserInputListener inputListener;
+    private final Vector2 windowDimensions;
+    private final int borderWidth;
 
     /**
      * Construct a new GameObject instance.
@@ -22,24 +24,30 @@ public class Paddle extends GameObject {
      * @param inputListener TODO document
      */
     public Paddle(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
-                  UserInputListener inputListener) {
+                  UserInputListener inputListener, Vector2 windowDimensions,int disFromEnd) {
         super(topLeftCorner, dimensions, renderable);
         this.inputListener = inputListener;
+        this.windowDimensions = windowDimensions;
+        this.borderWidth = disFromEnd;
     }
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         Vector2 movementDir = Vector2.ZERO;
-        if (inputListener.isKeyPressed(KeyEvent.VK_LEFT)) {
-            movementDir = movementDir.add(Vector2.LEFT);
+        if(this.inputListener.isKeyPressed(KeyEvent.VK_LEFT)) {
+            // We can only go left if we're less than ${minDistFromEdge} pixels away from the left edge
+            if((getCenter().x() - getDimensions().x()/2) - borderWidth > 0) {
+                movementDir = movementDir.add(Vector2.LEFT);
+            }
         }
-        if (inputListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
-            movementDir = movementDir.add(Vector2.RIGHT);
+
+        if(this.inputListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
+            // We can only go right if we're less than ${minDistFromEdge} pixels away from the right edge
+            if((getCenter().x() + getDimensions().x()/2) +
+                    borderWidth < windowDimensions.x()) {
+                movementDir = movementDir.add(Vector2.RIGHT);
+            }
         }
-//        if(getTopLeftCorner()<){
-//            setTopLeftCorner(movementDir);
-//        }
-        //TODO not get out of screen
         setVelocity(movementDir.mult(MOVEMENT_SPEED));
 
     }

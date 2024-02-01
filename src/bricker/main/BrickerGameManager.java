@@ -84,7 +84,7 @@ public class BrickerGameManager extends GameManager {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
         createAIPaddle(imageReader, windowDimentions);
-        createBorders(windowDimentions);
+        createBorders(windowDimentions);:q
         createBackground(imageReader,windowDimentions);
     }
 

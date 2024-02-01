@@ -2,10 +2,7 @@ package bricker.main;
 
 import bricker.brick_strategies.BasicCollisionStrategy;
 import bricker.brick_strategies.CollisionStrategy;
-import bricker.game_objects.AIPaddle;
-import bricker.game_objects.Ball;
-import bricker.game_objects.Brick;
-import bricker.game_objects.Paddle;
+import bricker.game_objects.*;
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.Layer;
@@ -23,6 +20,7 @@ public class BrickerGameManager extends GameManager {
     private static final String PADDLE_IMG_PATH = "assets/paddle.png";
     private static final String BRICK_ING_PATH = "assets/brick.png";
     private static final String BALL_IMG_PATH = "assets/ball.png";
+    private static final String HEART_IMG_PATH = "assets/heart.png";
     private static final String BACKGROUND_IMG_PATH = "assets/DARK_BG2_small.jpeg";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
     private static final String WINDOW_TITLE = "bricker";
@@ -212,6 +210,19 @@ private void createBorders(Vector2 windowDimensions) {
             }
         }
     }
+
+//    private void createHeart(ImageReader imageReader, UserInputListener inputListener,
+//                              Vector2 windowDimentions) {
+//        Renderable heartImage =
+//                imageReader.readImage(HEART_IMG_PATH, true);
+//        GameObject heart = new Heart(
+//                Vector2.ZERO, new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT), paddleImage,
+//                ball,windowDimensions,BORDER_WIDTH);
+//        aiPaddle.setCenter(
+//                new Vector2(windowDimensions.x() / 2, BASIC_SPACE));
+//        gameObjects().addGameObject(aiPaddle);
+//
+//    }
 
     private void askToPlayAgain(String prompt) {
         if (windowController.openYesNoDialog(prompt)){

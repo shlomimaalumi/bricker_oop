@@ -29,13 +29,7 @@ public class Brick extends GameObject {
         super.onCollisionEnter(other, collision);
         collisionStrategy.onCollision(this,other);
     }
-//    @Override
-//    public void onCollisionEnter(GameObject other, Collision collision) {
-//        super.onCollisionEnter(other, collision);
-//        Vector2 newVel = getVelocity().flipped(collision.getNormal());
-//        setVelocity(newVel);
-//        collisionSound.play();
-//    }
+
 
 }
 

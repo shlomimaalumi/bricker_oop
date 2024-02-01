@@ -35,7 +35,8 @@ public class BrickerGameManager extends GameManager {
     private static final int PADDLE_WIDTH = 150;
     private static final int INIT_LIVES = 3;
     private static final int BRICKS_IN_ROW = 8;
-    private static final int BRICKS_IN_COL = 5;
+    private static final int BRICKS_IN_COL = 7;
+    private static final int BRICKS_HEIGHT = 15;
     private static final int SPACE_BETWEEN_BRICKS = 5;
     private static final int BALL_RADIUS = 35;
     private static final float BALL_SPEED = 250;
@@ -43,6 +44,7 @@ public class BrickerGameManager extends GameManager {
     private static final float HALF = 0.5f;
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
+    private static final int INITAL_LIFE = 3;
     private int lifeCounter = INIT_LIVES;
     private static final Renderable BORDER_RENDERABLE =
             new RectangleRenderable(new Color(80, 140, 250));
@@ -155,7 +157,7 @@ public class BrickerGameManager extends GameManager {
                 PADDLE_IMG_PATH, false);
         GameObject aiPaddle = new AIPaddle(
                 Vector2.ZERO, new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT), paddleImage,
-                ball);
+                ball,windowDimensions,BORDER_WIDTH);
         aiPaddle.setCenter(
                 new Vector2(windowDimensions.x() / 2, BASIC_SPACE));
         gameObjects().addGameObject(aiPaddle);
@@ -172,9 +174,7 @@ private void createBorders(Vector2 windowDimensions) {
     gameObjects().addGameObject(
             new GameObject(
                     Vector2.ZERO,
-                    new Vector2(BORDER_WIDTH, windowDimensions.y()),
-                    null)
-    );
+                    new Vector2(BORDER_WIDTH, windowDimensions.y()), null),Layer.STATIC_OBJECTS);
 //    gameObjects().addGameObject(
 //            new GameObject(
 //                    Vector2.ZERO,
@@ -184,9 +184,7 @@ private void createBorders(Vector2 windowDimensions) {
     gameObjects().addGameObject(
             new GameObject(
                     new Vector2(windowDimensions.x() - BORDER_WIDTH, 0),
-                    new Vector2(BORDER_WIDTH, windowDimensions.y()),
-                    null)
-    );
+                    new Vector2(BORDER_WIDTH, windowDimensions.y()), null),Layer.STATIC_OBJECTS);
 }
 
     private void createBrick(Renderable brickImage, Vector2 brickVector, Vector2 windowDimentions,
@@ -243,7 +241,11 @@ private void createBorders(Vector2 windowDimensions) {
             prompt += WINNING_ANNOUNCEMENT;
         }
         if (ballHeight > windowDimentions.y()) {
-            prompt += LOSING_ANNOUNCEMENT;
+            if (--life == 0) {
+                prompt += LOSING_ANNOUNCEMENT;
+            } else {
+                windowController.resetGame();
+            }
         }
         if (!prompt.isEmpty()) {
             prompt += PLAY_AGAIN_ASKING_MSG;

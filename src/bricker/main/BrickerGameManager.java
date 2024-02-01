@@ -12,10 +12,9 @@ import danogl.gui.rendering.Renderable;
 import danogl.gui.rendering.TextRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
-
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Random;
-
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class BrickerGameManager extends GameManager {
@@ -155,7 +154,6 @@ public class BrickerGameManager extends GameManager {
         ball.setVelocity(new Vector2(ballVelX, ballVelY));
     }
 
-
     private void createPaddle(ImageReader imageReader, Vector2 windowDimensions, UserInputListener inputListener) {
         Renderable paddleImage = imageReader.readImage(
                 PADDLE_IMG_PATH, false);
@@ -179,13 +177,6 @@ public class BrickerGameManager extends GameManager {
         gameObjects().addGameObject(aiPaddle);
     }
 
-
-    //    private void createBorders() {
-//        gameObjects().addGameObject(Border.atDirection(Vector2.RIGHT, windowDimentions, BORDER_WIDTH,
-//                BORDER_COLOR));
-//        gameObjects().addGameObject(Border.atDirection(Vector2.LEFT, windowDimentions, BORDER_WIDTH,
-//                BORDER_COLOR));
-//    }
     private void createBorders(Vector2 windowDimensions) {
         gameObjects().addGameObject(
                 new GameObject(
@@ -229,19 +220,6 @@ public class BrickerGameManager extends GameManager {
         }
     }
 
-//    private void createHeart(ImageReader imageReader, UserInputListener inputListener,
-//                              Vector2 windowDimentions) {
-//        Renderable heartImage =
-//                imageReader.readImage(HEART_IMG_PATH, true);
-//        GameObject heart = new Heart(
-//                Vector2.ZERO, new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT), paddleImage,
-//                ball,windowDimensions,BORDER_WIDTH);
-//        aiPaddle.setCenter(
-//                new Vector2(windowDimensions.x() / 2, BASIC_SPACE));
-//        gameObjects().addGameObject(aiPaddle);
-//
-//    }
-
     private void askToPlayAgain(String prompt) {
         if (windowController.openYesNoDialog(prompt)) {
             lives.increaseBy(INIT_LIVES - lives.value());
@@ -254,15 +232,6 @@ public class BrickerGameManager extends GameManager {
             windowController.closeWindow();
         }
     }
-
-    // TODO add paddle life
-    //    private void onBallFall() {
-    //        this.lifeCounter--;
-    //        if (this.lifeCounter == 0)
-    //            gameLost();
-    //
-    //    }`
-
 
     private void checkForGameEnd() {
         double ballHeight = ball.getCenter().y();

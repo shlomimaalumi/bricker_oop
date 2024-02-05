@@ -44,7 +44,6 @@ public class BrickerGameManager extends GameManager {
     private static final float HALF = 0.5f;
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
-    private static final int INITAL_LIFE = 3;
     //    private Counter lifeCounter = new Counter(INIT_LIVES);
     private static final Renderable BORDER_RENDERABLE =
             new RectangleRenderable(new Color(80, 140, 250));

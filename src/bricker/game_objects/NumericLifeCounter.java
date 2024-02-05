@@ -30,6 +30,7 @@ public class NumericLifeCounter extends GameObject {
     public NumericLifeCounter(Vector2 topLeftCorner, Vector2 dimensions ,Counter lives,GameObjectCollection gameObjects) {
         super(Vector2.ZERO, Vector2.ZERO, null);
         this.lives = lives;
+        this.currentLives=lives.value();
         this.renderable = new TextRenderable(String.valueOf(lives.value()));
         renderable.setColor(Color.green);
         this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);

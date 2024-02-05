@@ -82,7 +82,7 @@ public class BrickerGameManager extends GameManager {
     public void initializeGame(ImageReader imageReader, SoundReader
             soundReader, UserInputListener inputListener,
                                WindowController windowController) {
-        //initialization
+        //initializationVe
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
         this.windowController = windowController;
         this.inputListener = inputListener;
@@ -92,7 +92,6 @@ public class BrickerGameManager extends GameManager {
 //        this.lives=3;
         createObjects(imageReader, soundReader);
     }
-
     private void createObjects(ImageReader imageReader, SoundReader soundReader) {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
@@ -131,6 +130,19 @@ public class BrickerGameManager extends GameManager {
                 (BASIC_SPACE + PADDLE_HEIGHT));
         NumericLifeCounter numericLifeCounter = new NumericLifeCounter(topLeftCorner, dimentions, lives, gameObjects());
         gameObjects().addGameObject(numericLifeCounter);
+    }
+
+    private void setRandomBallVelocityInCenter(){
+        Vector2 windowDimensions = windowController.getWindowDimensions();
+        this.ball.setCenter(windowDimensions.mult(HALF));
+        float ballVelX = BALL_SPEED;
+        float ballVelY = BALL_SPEED;
+        Random rand = new Random();
+        if (rand.nextBoolean())
+            ballVelX *= -1;
+        if (rand.nextBoolean())
+            ballVelY *= -1;
+        ball.setVelocity(new Vector2(ballVelX, ballVelY));
     }
 
     private void createBall(ImageReader imageReader, SoundReader soundReader, WindowController windowController) {
@@ -238,16 +250,16 @@ public class BrickerGameManager extends GameManager {
         double ballHeight = ball.getCenter().y();
         String prompt = "";
         if (bricksCounter.value()==0 || inputListener.isKeyPressed(KeyEvent.VK_W)) {
-            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
+            bricksCounter.increaseBy(bricksInRow*bricksInCol);
             prompt += WINNING_ANNOUNCEMENT;
         }
         if (ballHeight > windowDimentions.y()) {
-//            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
             lives.decrement();
             if (lives.value() == 0) {
                 prompt += LOSING_ANNOUNCEMENT;
-            } else {
                 windowController.resetGame();
+            } else {
+                setRandomBallVelocityInCenter();
             }
         }
         if (!prompt.isEmpty()) {
@@ -255,6 +267,9 @@ public class BrickerGameManager extends GameManager {
             askToPlayAgain(prompt);
         }
     }
+
+
+
 
     private void createBackground(ImageReader imageReader, Vector2 windowDimensions) {
         Renderable backgroundImage =

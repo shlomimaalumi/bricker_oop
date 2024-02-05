@@ -238,7 +238,7 @@ public class BrickerGameManager extends GameManager {
             lives.increaseBy(INIT_LIVES - lives.value());
 //            int x=bricksInRow*bricksInCol-bricksCounter.value();
 //            System.out.println("reset to: " +x);
-//            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
+            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
 
             windowController.resetGame();
         } else {
@@ -250,24 +250,35 @@ public class BrickerGameManager extends GameManager {
         double ballHeight = ball.getCenter().y();
         String prompt = "";
         if (bricksCounter.value()==0 || inputListener.isKeyPressed(KeyEvent.VK_W)) {
-            bricksCounter.increaseBy(bricksInRow*bricksInCol);
-            prompt += WINNING_ANNOUNCEMENT;
+            prompt = handleWinning();
         }
         if (ballHeight > windowDimentions.y()) {
-            lives.decrement();
-            if (lives.value() == 0) {
-                prompt += LOSING_ANNOUNCEMENT;
-                windowController.resetGame();
-            } else {
-                setRandomBallVelocityInCenter();
-            }
+            prompt = handleLosing();
         }
         if (!prompt.isEmpty()) {
             prompt += PLAY_AGAIN_ASKING_MSG;
             askToPlayAgain(prompt);
         }
+
+    }
+    String handleWinning(){
+        bricksCounter.increaseBy(bricksInRow*bricksInCol);
+        return WINNING_ANNOUNCEMENT;
     }
 
+    String handleLosing(){
+        String prompt = "";
+        lives.decrement();
+        System.out.println(lives.value());
+        if (lives.value() == 0) {
+            prompt += LOSING_ANNOUNCEMENT;
+            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
+            windowController.resetGame();
+        } else {
+            setRandomBallVelocityInCenter();
+        }
+        return  prompt;
+    }
 
 
 

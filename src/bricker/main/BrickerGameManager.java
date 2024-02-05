@@ -141,17 +141,18 @@ public class BrickerGameManager extends GameManager {
                 Vector2.ZERO, new Vector2(BALL_RADIUS, BALL_RADIUS), ballImage, collisionSound);
 
         Vector2 windowDimensions = windowController.getWindowDimensions();
-        ball.setCenter(windowDimensions.mult(HALF));
+//        ball.setCenter(windowDimensions.mult(HALF));
         gameObjects().addGameObject(ball);
-
-        float ballVelX = BALL_SPEED;
-        float ballVelY = BALL_SPEED;
-        Random rand = new Random();
-        if (rand.nextBoolean())
-            ballVelX *= -1;
-        if (rand.nextBoolean())
-            ballVelY *= -1;
-        ball.setVelocity(new Vector2(ballVelX, ballVelY));
+        setRandomBallVelocityInCenter();
+//
+//        float ballVelX = BALL_SPEED;
+//        float ballVelY = BALL_SPEED;
+//        Random rand = new Random();
+//        if (rand.nextBoolean())
+//            ballVelX *= -1;
+//        if (rand.nextBoolean())
+//            ballVelY *= -1;
+//        ball.setVelocity(new Vector2(ballVelX, ballVelY));
     }
 
     private void createPaddle(ImageReader imageReader, Vector2 windowDimensions, UserInputListener inputListener) {

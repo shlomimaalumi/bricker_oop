@@ -10,6 +10,10 @@ import danogl.util.Vector2;
 import java.awt.*;
 
 public class NumericLifeCounter extends GameObject {
+    private  GameObjectCollection gameObjects;
+    private  Vector2 topLeftCorner;
+    private  Vector2 dimensions;
+    private  int currentLives;
     private  TextRenderable renderable;
     private  GameObject numericCounter;
     private Counter lives;
@@ -29,18 +33,27 @@ public class NumericLifeCounter extends GameObject {
         this.renderable = new TextRenderable(String.valueOf(lives.value()));
         renderable.setColor(Color.green);
         this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);
+        this.gameObjects = gameObjects;
         gameObjects.addGameObject(numericCounter, Layer.UI);
+        this.topLeftCorner = topLeftCorner;
+        this.dimensions = dimensions;
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-//        renderable=new TextRenderable(String.valueOf(lives.value()));
-        Color color = switch (lives.value()) {
-            case 1 -> Color.red;
-            case 2 -> Color.yellow;
-            default -> Color.green;
-        };
-        renderable.setColor(color);
+        if (lives.value() != currentLives){
+            gameObjects.removeGameObject(numericCounter, Layer.UI);
+            renderable=new TextRenderable(String.valueOf(lives.value()));
+            this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);
+            this.gameObjects.addGameObject(numericCounter, Layer.UI);
+            Color color = switch (lives.value()) {
+                case 1 -> Color.red;
+                case 2 -> Color.yellow;
+                default -> Color.green;
+            };
+            renderable.setColor(color);
+            this.currentLives = lives.value();
+        }
     }
 }

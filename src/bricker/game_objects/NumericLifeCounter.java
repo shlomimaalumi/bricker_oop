@@ -56,5 +56,13 @@ public class NumericLifeCounter extends GameObject {
             renderable.setColor(color);
             this.currentLives = lives.value();
         }
+//        renderable=new TextRenderable(String.valueOf(les.value()));
+        Color color = switch (lives.value()) {
+            case 1 -> Color.red;
+            case 2 -> Color.yellow;
+            default -> Color.green;
+        };
+        renderable.setColor(color);
+
     }
 }

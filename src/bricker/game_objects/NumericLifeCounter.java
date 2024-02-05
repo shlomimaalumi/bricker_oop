@@ -10,6 +10,10 @@ import danogl.util.Vector2;
 import java.awt.*;
 
 public class NumericLifeCounter extends GameObject {
+    private  GameObjectCollection gameObjects;
+    private  Vector2 topLeftCorner;
+    private  Vector2 dimensions;
+    private  int currentLives;
     private  TextRenderable renderable;
     private  GameObject numericCounter;
     private Counter lives;
@@ -26,15 +30,32 @@ public class NumericLifeCounter extends GameObject {
     public NumericLifeCounter(Vector2 topLeftCorner, Vector2 dimensions ,Counter lives,GameObjectCollection gameObjects) {
         super(Vector2.ZERO, Vector2.ZERO, null);
         this.lives = lives;
+        this.currentLives=lives.value();
         this.renderable = new TextRenderable(String.valueOf(lives.value()));
         renderable.setColor(Color.green);
         this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);
+        this.gameObjects = gameObjects;
         gameObjects.addGameObject(numericCounter, Layer.UI);
+        this.topLeftCorner = topLeftCorner;
+        this.dimensions = dimensions;
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        if (lives.value() != currentLives){
+            gameObjects.removeGameObject(numericCounter, Layer.UI);
+            renderable=new TextRenderable(String.valueOf(lives.value()));
+            this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);
+            this.gameObjects.addGameObject(numericCounter, Layer.UI);
+            Color color = switch (lives.value()) {
+                case 1 -> Color.red;
+                case 2 -> Color.yellow;
+                default -> Color.green;
+            };
+            renderable.setColor(color);
+            this.currentLives = lives.value();
+        }
 //        renderable=new TextRenderable(String.valueOf(les.value()));
         Color color = switch (lives.value()) {
             case 1 -> Color.red;
@@ -42,5 +63,6 @@ public class NumericLifeCounter extends GameObject {
             default -> Color.green;
         };
         renderable.setColor(color);
+
     }
 }

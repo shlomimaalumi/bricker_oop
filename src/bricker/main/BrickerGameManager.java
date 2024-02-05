@@ -24,6 +24,11 @@ public class BrickerGameManager extends GameManager {
     private static final String HEART_IMG_PATH = "assets/heart.png";
     private static final String BACKGROUND_IMG_PATH = "assets/DARK_BG2_small.jpeg";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
+    private static final String PADDLE_IMG_PATH = "Bricker/assets/paddle.png";
+    private static final String BRICK_ING_PATH = "Bricker/assets/brick.png";
+    private static final String BALL_IMG_PATH = "Bricker/assets/ball.png";
+    private static final String BACKGROUND_IMG_PATH = "Bricker/assets/DARK_BG2_small.jpeg";
+    private static final String COLLISION_SOUND_PATH = "Bricker/assets/blop_cut_silenced.wav";
     private static final String WINDOW_TITLE = "bricker";
     private static final String WINNING_ANNOUNCEMENT = "You win!\n";
     private static final String LOSING_ANNOUNCEMENT = "You lose!\n";
@@ -44,7 +49,6 @@ public class BrickerGameManager extends GameManager {
     private static final float HALF = 0.5f;
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
-    private static final int INITAL_LIFE = 3;
     //    private Counter lifeCounter = new Counter(INIT_LIVES);
     private static final Renderable BORDER_RENDERABLE =
             new RectangleRenderable(new Color(80, 140, 250));
@@ -82,7 +86,7 @@ public class BrickerGameManager extends GameManager {
     public void initializeGame(ImageReader imageReader, SoundReader
             soundReader, UserInputListener inputListener,
                                WindowController windowController) {
-        //initialization
+        //initializationVe
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
         this.windowController = windowController;
         this.inputListener = inputListener;
@@ -92,7 +96,6 @@ public class BrickerGameManager extends GameManager {
 //        this.lives=3;
         createObjects(imageReader, soundReader);
     }
-
     private void createObjects(ImageReader imageReader, SoundReader soundReader) {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
@@ -103,7 +106,6 @@ public class BrickerGameManager extends GameManager {
         createBackground(imageReader, windowDimentions);
         createNumericCounter();
         createHeartsCounter(imageReader);
-
 
     }
 
@@ -133,17 +135,9 @@ public class BrickerGameManager extends GameManager {
         gameObjects().addGameObject(numericLifeCounter);
     }
 
-    private void createBall(ImageReader imageReader, SoundReader soundReader, WindowController windowController) {
-        Renderable ballImage =
-                imageReader.readImage(BALL_IMG_PATH, true);
-        Sound collisionSound = soundReader.readSound(COLLISION_SOUND_PATH);
-        ball = new Ball(
-                Vector2.ZERO, new Vector2(BALL_RADIUS, BALL_RADIUS), ballImage, collisionSound);
-
+    private void setRandomBallVelocityInCenter(){
         Vector2 windowDimensions = windowController.getWindowDimensions();
-        ball.setCenter(windowDimensions.mult(HALF));
-        gameObjects().addGameObject(ball);
-
+        this.ball.setCenter(windowDimensions.mult(HALF));
         float ballVelX = BALL_SPEED;
         float ballVelY = BALL_SPEED;
         Random rand = new Random();
@@ -152,6 +146,28 @@ public class BrickerGameManager extends GameManager {
         if (rand.nextBoolean())
             ballVelY *= -1;
         ball.setVelocity(new Vector2(ballVelX, ballVelY));
+    }
+
+    private void createBall(ImageReader imageReader, SoundReader soundReader, WindowController windowController) {
+        Renderable ballImage =
+                imageReader.readImage(BALL_IMG_PATH, true);
+        Sound collisionSound = soundReader.readSound(COLLISION_SOUND_PATH);
+        ball = new Ball(
+                Vector2.ZERO, new Vector2(BALL_RADIUS, BALL_RADIUS), ballImage, collisionSound);
+
+        Vector2 windowDimensions = windowController.getWindowDimensions();
+//        ball.setCenter(windowDimensions.mult(HALF));
+        gameObjects().addGameObject(ball);
+        setRandomBallVelocityInCenter();
+//
+//        float ballVelX = BALL_SPEED;
+//        float ballVelY = BALL_SPEED;
+//        Random rand = new Random();
+//        if (rand.nextBoolean())
+//            ballVelX *= -1;
+//        if (rand.nextBoolean())
+//            ballVelY *= -1;
+//        ball.setVelocity(new Vector2(ballVelX, ballVelY));
     }
 
     private void createPaddle(ImageReader imageReader, Vector2 windowDimensions, UserInputListener inputListener) {
@@ -225,7 +241,7 @@ public class BrickerGameManager extends GameManager {
             lives.increaseBy(INIT_LIVES - lives.value());
 //            int x=bricksInRow*bricksInCol-bricksCounter.value();
 //            System.out.println("reset to: " +x);
-//            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
+            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
 
             windowController.resetGame();
         } else {
@@ -237,23 +253,38 @@ public class BrickerGameManager extends GameManager {
         double ballHeight = ball.getCenter().y();
         String prompt = "";
         if (bricksCounter.value()==0 || inputListener.isKeyPressed(KeyEvent.VK_W)) {
-            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
-            prompt += WINNING_ANNOUNCEMENT;
+            prompt = handleWinning();
         }
         if (ballHeight > windowDimentions.y()) {
-//            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
-            lives.decrement();
-            if (lives.value() == 0) {
-                prompt += LOSING_ANNOUNCEMENT;
-            } else {
-                windowController.resetGame();
-            }
+            prompt = handleLosing();
         }
         if (!prompt.isEmpty()) {
             prompt += PLAY_AGAIN_ASKING_MSG;
             askToPlayAgain(prompt);
         }
+
     }
+    String handleWinning(){
+        bricksCounter.increaseBy(bricksInRow*bricksInCol);
+        return WINNING_ANNOUNCEMENT;
+    }
+
+    String handleLosing(){
+        //TODO delete this comment
+        String prompt = "";
+        lives.decrement();
+        System.out.println(lives.value());
+        if (lives.value() == 0) {
+            prompt += LOSING_ANNOUNCEMENT;
+            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
+            windowController.resetGame();
+        } else {
+            setRandomBallVelocityInCenter();
+        }
+        return  prompt;
+    }
+
+
 
     private void createBackground(ImageReader imageReader, Vector2 windowDimensions) {
         Renderable backgroundImage =

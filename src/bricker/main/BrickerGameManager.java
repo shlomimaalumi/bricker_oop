@@ -24,6 +24,11 @@ public class BrickerGameManager extends GameManager {
     private static final String HEART_IMG_PATH = "assets/heart.png";
     private static final String BACKGROUND_IMG_PATH = "assets/DARK_BG2_small.jpeg";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
+    private static final String PADDLE_IMG_PATH = "Bricker/assets/paddle.png";
+    private static final String BRICK_ING_PATH = "Bricker/assets/brick.png";
+    private static final String BALL_IMG_PATH = "Bricker/assets/ball.png";
+    private static final String BACKGROUND_IMG_PATH = "Bricker/assets/DARK_BG2_small.jpeg";
+    private static final String COLLISION_SOUND_PATH = "Bricker/assets/blop_cut_silenced.wav";
     private static final String WINDOW_TITLE = "bricker";
     private static final String WINNING_ANNOUNCEMENT = "You win!\n";
     private static final String LOSING_ANNOUNCEMENT = "You lose!\n";

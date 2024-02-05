@@ -43,7 +43,6 @@ public class HeartsLifeCounter extends GameObject {
         gameObjects.addGameObject(heart, Layer.UI);
     }
 
-//    private void addHeart(){}
 
     private void removeHeart(){}
 

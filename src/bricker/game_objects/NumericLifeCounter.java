@@ -35,7 +35,7 @@ public class NumericLifeCounter extends GameObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-//        renderable=new TextRenderable(String.valueOf(lives.value()));
+//        renderable=new TextRenderable(String.valueOf(les.value()));
         Color color = switch (lives.value()) {
             case 1 -> Color.red;
             case 2 -> Color.yellow;

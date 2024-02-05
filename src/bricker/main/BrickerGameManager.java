@@ -265,6 +265,7 @@ public class BrickerGameManager extends GameManager {
     }
 
     String handleLosing(){
+        //TODO delete this comment
         String prompt = "";
         lives.decrement();
         System.out.println(lives.value());

@@ -102,7 +102,6 @@ public class BrickerGameManager extends GameManager {
         createNumericCounter();
         createHeartsCounter(imageReader);
 
-
     }
 
     @Override

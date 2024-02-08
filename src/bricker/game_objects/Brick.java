@@ -3,10 +3,15 @@ package bricker.game_objects;
 import bricker.brick_strategies.CollisionStrategy;
 import danogl.GameObject;
 import danogl.collisions.Collision;
+import danogl.collisions.GameObjectCollection;
+import danogl.collisions.Layer;
 import danogl.gui.rendering.Renderable;
+import danogl.util.Counter;
 import danogl.util.Vector2;
 
 public class Brick extends GameObject {
+
+    private CollisionStrategy[] collisionStrategies;
     /**
      * Construct a new GameObject instance.
      *
@@ -16,18 +21,21 @@ public class Brick extends GameObject {
      * @param renderable    The renderable representing the object. Can be null, in which case the GameObject
      *                      will not be rendered.
      */
-    private CollisionStrategy collisionStrategy;
 
     public Brick(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
-                 CollisionStrategy collisionStrategy) {
+                 CollisionStrategy[] collisionStrategies) {
         super(topLeftCorner, dimensions, renderable);
-        this.collisionStrategy = collisionStrategy;
+        this.collisionStrategies = collisionStrategies;
     }
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
-        collisionStrategy.onCollision(this,other);
+        for (CollisionStrategy strategy: collisionStrategies)
+            strategy.onCollision(this,other);
+
+//        collisionStrategy.onCollision(this,other);
+
     }
 
 

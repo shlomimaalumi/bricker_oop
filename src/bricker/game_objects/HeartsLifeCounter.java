@@ -15,9 +15,7 @@ public class HeartsLifeCounter extends GameObject {
     private final Renderable heartImage;
     private final Stack<Heart> heartsStack ;
     private final Counter lives;
-    private int currentHeartsAmount;
-    Private final Stack<Heart>;
-    private Counter lives;
+
     /**
      * Construct a new GameObject instance.
      *
@@ -46,6 +44,7 @@ public class HeartsLifeCounter extends GameObject {
     {
         Vector2 curPosiotion = topLeftCorner.add(heartSize.multX(i).multY(0));
         Heart heart = new Heart(curPosiotion,this.heartSize,heartImage);
+        heartsStack.push(heart);
         gameObjects.addGameObject(heart, Layer.UI);
     }
 

@@ -2,9 +2,14 @@ package bricker.game_objects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
+import danogl.gui.ImageReader;
 import danogl.gui.Sound;
+import danogl.gui.SoundReader;
+import danogl.gui.WindowController;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
+
+import java.util.Random;
 
 public class Ball extends GameObject {
     private final Sound collisionSound;
@@ -44,4 +49,6 @@ public class Ball extends GameObject {
     public int getCollisionCounter() {
         return collisionCounter;
     }
+
+
 }

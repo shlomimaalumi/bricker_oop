@@ -235,6 +235,7 @@ public class BrickerGameManager extends GameManager {
 
     private void askToPlayAgain(String prompt) {
         if (windowController.openYesNoDialog(prompt)) {
+            clearGame();
             lives.increaseBy(INIT_LIVES - lives.value());
 //            int x=bricksInRow*bricksInCol-bricksCounter.value();
 //            System.out.println("reset to: " +x);
@@ -267,7 +268,6 @@ public class BrickerGameManager extends GameManager {
             prompt += PLAY_AGAIN_ASKING_MSG;
             askToPlayAgain(prompt);
         }
-
     }
 
 

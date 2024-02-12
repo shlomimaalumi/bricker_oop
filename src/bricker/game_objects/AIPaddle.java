@@ -10,6 +10,8 @@ public class AIPaddle extends GameObject {
     private final int  borderWidth;
     private final Vector2 windowDimensions;
     private GameObject objectToFollow;
+    private static final String AI_PAD_TAG = "AI paddle";
+
 
     /**
      * Construct a new GameObject instance.
@@ -25,6 +27,7 @@ public class AIPaddle extends GameObject {
         this.objectToFollow = objectToFollow;
         this.windowDimensions = windowDimensions;
         this.borderWidth = disFromEnd;
+        setTag(AI_PAD_TAG);
     }
 
     @Override

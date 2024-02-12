@@ -17,6 +17,8 @@ public class NumericLifeCounter extends GameObject {
     private  TextRenderable renderable;
     private  GameObject numericCounter;
     private Counter lives;
+    private static final String NUMERIC_COUNTER_TAG = "Numeric counter";
+
 
 //    private final TextRenderable textRenderable;
     /**
@@ -38,6 +40,7 @@ public class NumericLifeCounter extends GameObject {
         gameObjects.addGameObject(numericCounter, Layer.UI);
         this.topLeftCorner = topLeftCorner;
         this.dimensions = dimensions;
+        setTag(NUMERIC_COUNTER_TAG);
     }
 
     @Override

@@ -12,6 +12,8 @@ public class Paddle extends GameObject {
     private UserInputListener inputListener;
     private final Vector2 windowDimensions;
     private final int borderWidth;
+    public static final String PADDLE_TAG = "Paddle";
+
 
     /**
      * Construct a new GameObject instance.
@@ -29,6 +31,7 @@ public class Paddle extends GameObject {
         this.inputListener = inputListener;
         this.windowDimensions = windowDimensions;
         this.borderWidth = disFromEnd;
+        setTag(PADDLE_TAG);
     }
     @Override
     public void update(float deltaTime) {

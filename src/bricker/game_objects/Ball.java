@@ -16,6 +16,8 @@ public class Ball extends GameObject {
     private int collisionCounter;
     private static final int INITIAL_COUNTER = 0;
     private static final int COLLISION = 1;
+    private static final String BALL_TAG = "Ball";
+
 
 
 
@@ -35,15 +37,18 @@ public class Ball extends GameObject {
         super(topLeftCorner, dimensions, renderable);
         collisionSound = sound;
         collisionCounter = INITIAL_COUNTER;
+        setTag(BALL_TAG);
     }
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
-        super.onCollisionEnter(other, collision);
-        Vector2 newVel = getVelocity().flipped(collision.getNormal());
-        setVelocity(newVel);
-        collisionSound.play();
-        collisionCounter += COLLISION;
+        if (!other.getTag().equals(Heart.HEART_TAG)) {
+            super.onCollisionEnter(other, collision);
+            Vector2 newVel = getVelocity().flipped(collision.getNormal());
+            setVelocity(newVel);
+            collisionSound.play();
+            collisionCounter += COLLISION;
+        }
     }
 
     public int getCollisionCounter() {

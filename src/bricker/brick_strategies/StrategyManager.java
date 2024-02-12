@@ -25,6 +25,9 @@ public class StrategyManager implements CollisionStrategy{
         this.ballSpeed = ballSpeed;
         this.puckList = puckList;
         this.ballSize = ballSize;
+        this.heartDimensions = heartDimensions;
+        this.livesCounter = livesCounter;
+        this.imagePath = imagePath;
     }
 
     private CollisionStrategy[] generateStrategies() {

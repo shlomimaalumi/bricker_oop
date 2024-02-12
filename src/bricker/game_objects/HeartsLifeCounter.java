@@ -15,6 +15,8 @@ public class HeartsLifeCounter extends GameObject {
     private final Renderable heartImage;
     private final Stack<Heart> heartsStack ;
     private final Counter lives;
+    private static final String HEART_COUNTER_TAG = "Heart counter";
+
 
     /**
      * Construct a new GameObject instance.
@@ -38,6 +40,7 @@ public class HeartsLifeCounter extends GameObject {
             bulidHeartNumberI(i);
         }
         this.lives = lives;
+        setTag(HEART_COUNTER_TAG);
     }
 
     public void bulidHeartNumberI(int i)

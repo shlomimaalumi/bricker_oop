@@ -10,6 +10,8 @@ import danogl.util.Counter;
 import danogl.util.Vector2;
 
 public class Brick extends GameObject {
+    public static final String BRICK_TAG = "Brick";
+
 
     private CollisionStrategy[] collisionStrategies;
     /**

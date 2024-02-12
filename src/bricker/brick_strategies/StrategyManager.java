@@ -3,6 +3,7 @@ package bricker.brick_strategies;
 import java.awt.*;
 import java.util.ArrayList;
 
+import bricker.game_objects.Heart;
 import bricker.game_objects.Puck;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
@@ -25,11 +26,13 @@ public class StrategyManager implements CollisionStrategy {
     private Vector2 heartDimensions;
     private Counter livesCounter;
     private String imagePath;
+    private final ArrayList<Heart> heartList;
 
     public StrategyManager(GameObjectCollection gameObjects, Counter bricksCounter,
                            ImageReader imageReader, SoundReader soundReader, float ballSpeed,
                            ArrayList<Puck> puckList, float ballSize,
-                           Vector2 heartDimensions, Counter livesCounter, String imagePath) {
+                           Vector2 heartDimensions, Counter livesCounter, String imagePath,
+                           ArrayList<Heart> heartList) {
         this.gameObjects = gameObjects;
         this.bricksCounter = bricksCounter;
         this.imageReader = imageReader;
@@ -40,10 +43,11 @@ public class StrategyManager implements CollisionStrategy {
         this.heartDimensions = heartDimensions;
         this.livesCounter = livesCounter;
         this.imagePath = imagePath;
+        this.heartList = heartList;
     }
 
     public CollisionStrategy[] generateStrategies() {
-        return new CollisionStrategy[]{ basicStrategy(),extraHeartStrategy()};
+        return new CollisionStrategy[]{ basicStrategy(),extraHeartStrategy(),addPucksStrategy()};
     }
 
     private CollisionStrategy basicStrategy() {

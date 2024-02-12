@@ -2,19 +2,20 @@ package bricker.main;
 
 import bricker.brick_strategies.*;
 import bricker.game_objects.*;
+
 import java.util.ArrayList;
+
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.Layer;
 import danogl.gui.*;
-import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
-import danogl.gui.rendering.TextRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
-import java.awt.*;
+
 import java.awt.event.KeyEvent;
 import java.util.Random;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class BrickerGameManager extends GameManager {
@@ -32,10 +33,10 @@ public class BrickerGameManager extends GameManager {
     private static final int PADDLE_HEIGHT = 20;
     private static final int PADDLE_WIDTH = 150;
     private static final int INIT_LIVES = 3;
-//    private static final int BRICKS_IN_ROW = 8;
+    //    private static final int BRICKS_IN_ROW = 8;
 //    private static final int BRICKS_IN_COL = 7;
     private static final int BRICKS_IN_ROW = 2;
-    private static final int BRICKS_IN_COL =  3;
+    private static final int BRICKS_IN_COL = 3;
     private static final int BRICKS_HEIGHT = 15;
     private static final int SPACE_BETWEEN_BRICKS = 5;
     private static final int BALL_RADIUS = 35;
@@ -57,7 +58,8 @@ public class BrickerGameManager extends GameManager {
     private SoundReader soundReader;
     private ImageReader imageReader;
     private ArrayList<Puck> puckList;
-//    private TextRenderable textRenderable;
+    private ArrayList<Heart> heartList;
+    //    private TextRenderable textRenderable;
 //    private GameObject numericCounter;
     private Counter bricksCounter;
 //    private CollisionStrategy collisionStrategy;
@@ -68,7 +70,9 @@ public class BrickerGameManager extends GameManager {
         this.bricksInCol = BRICKS_IN_COL;
         this.lives = new Counter(INIT_LIVES);
         this.puckList = new ArrayList<>();
-        this.bricksCounter=new Counter((bricksInRow*bricksInCol));
+        this.heartList = new ArrayList<>();
+
+        this.bricksCounter = new Counter((bricksInRow * bricksInCol));
     }
 
     public BrickerGameManager(String windowTitle, Vector2 windowDimentions, int bricksInRow, int bricksInCol) {
@@ -77,7 +81,8 @@ public class BrickerGameManager extends GameManager {
         this.bricksInCol = bricksInCol;
         this.lives = new Counter(INIT_LIVES);
         this.puckList = new ArrayList<>();
-        this.bricksCounter=new Counter((bricksInRow * bricksInCol));
+        this.heartList = new ArrayList<>();
+        this.bricksCounter = new Counter((bricksInRow * bricksInCol));
     }
 
 
@@ -94,14 +99,16 @@ public class BrickerGameManager extends GameManager {
 //        this.lives=3;
         createObjects(imageReader, soundReader);
     }
+
     private void createObjects(ImageReader imageReader, SoundReader soundReader) {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
 //        createAIPaddle(imageReader, windowDimentions);
         Vector2 heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
-        StrategyManager strategyManager = new StrategyManager(gameObjects(),bricksCounter,imageReader,
-                soundReader,BALL_SPEED,puckList,BALL_RADIUS,heartDimentions,lives,HEART_IMG_PATH);
-        createBricks(imageReader, inputListener, windowDimentions,strategyManager.generateStrategies());
+        StrategyManager strategyManager = new StrategyManager(gameObjects(), bricksCounter, imageReader,
+                soundReader, BALL_SPEED, puckList, BALL_RADIUS, heartDimentions, lives, HEART_IMG_PATH,
+                heartList);
+        createBricks(imageReader, inputListener, windowDimentions, strategyManager.generateStrategies());
 //                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
 //                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)}
 //                new ExtraLifeStrategy());
@@ -115,21 +122,19 @@ public class BrickerGameManager extends GameManager {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-//        for (GameObject gameObject:this.gameObjects())
-//            if (gameObject instanceof Puck )
+        checkPucks();
+        checkHearts();
         checkForGameEnd();
     }
 
 
-
-    private void createHeartsCounter(ImageReader imageReader)
-    {
+    private void createHeartsCounter(ImageReader imageReader) {
         Vector2 dimensions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
-        Vector2 beginHeartsPos = new Vector2(BORDER_WIDTH+ GRAPHIC_COUNTER_SIZE, windowDimentions.y()
+        Vector2 beginHeartsPos = new Vector2(BORDER_WIDTH + GRAPHIC_COUNTER_SIZE, windowDimentions.y()
                 - 2 * (BASIC_SPACE + PADDLE_HEIGHT));
-        Renderable heartImage = imageReader.readImage(HEART_IMG_PATH,true);
-        HeartsLifeCounter heartsLifeCounter=new HeartsLifeCounter(beginHeartsPos,dimensions,heartImage,lives
-        , gameObjects());
+        Renderable heartImage = imageReader.readImage(HEART_IMG_PATH, true);
+        HeartsLifeCounter heartsLifeCounter = new HeartsLifeCounter(beginHeartsPos, dimensions, heartImage, lives
+                , gameObjects());
         gameObjects().addGameObject(heartsLifeCounter);
     }
 
@@ -141,7 +146,7 @@ public class BrickerGameManager extends GameManager {
         gameObjects().addGameObject(numericLifeCounter);
     }
 
-    private void setRandomBallVelocityInCenter(){
+    private void setRandomBallVelocityInCenter() {
         Vector2 windowDimensions = windowController.getWindowDimensions();
         this.ball.setCenter(windowDimensions.mult(HALF));
         float ballVelX = BALL_SPEED;
@@ -195,12 +200,12 @@ public class BrickerGameManager extends GameManager {
                 new GameObject(
                         Vector2.ZERO,
                         new Vector2(BORDER_WIDTH, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
-    gameObjects().addGameObject(
-            new GameObject(
-                    Vector2.ZERO,
-                    new Vector2(windowDimensions.x(), BORDER_WIDTH),
-                    null)
-    );
+        gameObjects().addGameObject(
+                new GameObject(
+                        Vector2.ZERO,
+                        new Vector2(windowDimensions.x(), BORDER_WIDTH),
+                        null)
+        );
         gameObjects().addGameObject(
                 new GameObject(
                         new Vector2(windowDimensions.x() - BORDER_WIDTH, 0),
@@ -239,30 +244,58 @@ public class BrickerGameManager extends GameManager {
             lives.increaseBy(INIT_LIVES - lives.value());
 //            int x=bricksInRow*bricksInCol-bricksCounter.value();
 //            System.out.println("reset to: " +x);
-            bricksCounter.increaseBy(bricksInRow*bricksInCol-bricksCounter.value());
-            clearPucks();
+            bricksCounter.increaseBy(bricksInRow * bricksInCol - bricksCounter.value());
             windowController.resetGame();
         } else {
             windowController.closeWindow();
         }
     }
 
-    private void checkPucks(){
+    private void checkPucks() {
+        for (Puck puck : puckList) {
+            if (puck.getTopLeftCorner().y() > windowDimentions.y()) {
+                gameObjects().removeGameObject(puck);
+            }
+        }
+    }
+
+    private void clearPucks() {
+        for (Puck puck : puckList) {
+            gameObjects().removeGameObject(puck);
+        }
+        this.puckList.clear();
 
     }
 
-    private void clearPucks(){
+    private void checkHearts() {
+        for (Heart heart : heartList) {
+            if (heart.getTopLeftCorner().y() > windowDimentions.y()) {
+                gameObjects().removeGameObject(heart);
+            }
+        }
+    }
+
+    private void clearHears() {
+        for (Heart heart : heartList) {
+            gameObjects().removeGameObject(heart);
+        }
         this.puckList.clear();
+    }
+
+
+    private void clearGame() {
+        clearHears();
+        clearPucks();
     }
 
     private void checkForGameEnd() {
         double ballHeight = ball.getCenter().y();
         String prompt = "";
-        if (bricksCounter.value()==0 || inputListener.isKeyPressed(KeyEvent.VK_W)) {
+        if (bricksCounter.value() == 0 || inputListener.isKeyPressed(KeyEvent.VK_W)) {
             prompt = handleWinning();
         }
         if (ballHeight > windowDimentions.y()) {
-            prompt = handleLosing();
+            prompt = handleLosingRound();
         }
         if (!prompt.isEmpty()) {
             prompt += PLAY_AGAIN_ASKING_MSG;
@@ -271,11 +304,11 @@ public class BrickerGameManager extends GameManager {
     }
 
 
-    String handleWinning(){
+    String handleWinning() {
         return WINNING_ANNOUNCEMENT;
     }
 
-    String handleLosing(){
+    String handleLosingRound() {
         //TODO delete this comment
         String prompt = "";
         lives.decrement();
@@ -286,7 +319,7 @@ public class BrickerGameManager extends GameManager {
         } else {
             setRandomBallVelocityInCenter();
         }
-        return  prompt;
+        return prompt;
     }
 
 

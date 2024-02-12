@@ -46,7 +46,7 @@ public class NumericLifeCounter extends GameObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        if (lives.value() != currentLives){
+        if (lives.value() != currentLives ){
             gameObjects.removeGameObject(numericCounter, Layer.UI);
             renderable=new TextRenderable(String.valueOf(lives.value()));
             this.numericCounter = new GameObject(topLeftCorner, dimensions, renderable);

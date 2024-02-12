@@ -14,6 +14,7 @@ public class Brick extends GameObject {
 
 
     private CollisionStrategy[] collisionStrategies;
+
     /**
      * Construct a new GameObject instance.
      *
@@ -28,13 +29,14 @@ public class Brick extends GameObject {
                  CollisionStrategy[] collisionStrategies) {
         super(topLeftCorner, dimensions, renderable);
         this.collisionStrategies = collisionStrategies;
+        setTag(BRICK_TAG);
     }
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
-        for (CollisionStrategy strategy: collisionStrategies)
-            strategy.onCollision(this,other);
+        for (CollisionStrategy strategy : collisionStrategies)
+            strategy.onCollision(this, other);
 
 //        collisionStrategy.onCollision(this,other);
 

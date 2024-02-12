@@ -46,7 +46,7 @@ public class HeartsLifeCounter extends GameObject {
     public void bulidHeartNumberI(int i)
     {
         Vector2 curPosiotion = topLeftCorner.add(heartSize.multX(i).multY(0));
-        Heart heart = new Heart(curPosiotion,this.heartSize,heartImage);
+        Heart heart = new Heart(curPosiotion,this.heartSize,heartImage,lives,gameObjects);
         heartsStack.push(heart);
         gameObjects.addGameObject(heart, Layer.UI);
     }

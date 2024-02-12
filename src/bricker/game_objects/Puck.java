@@ -21,6 +21,7 @@ public class Puck extends Ball {
         setTag(PUCK_TAG);
     }
 
+
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);

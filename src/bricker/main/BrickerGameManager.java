@@ -1,8 +1,6 @@
 package bricker.main;
 
-import bricker.brick_strategies.AddPucksStrategty;
-import bricker.brick_strategies.BasicCollisionStrategy;
-import bricker.brick_strategies.CollisionStrategy;
+import bricker.brick_strategies.*;
 import bricker.game_objects.*;
 import java.util.ArrayList;
 import danogl.GameManager;
@@ -48,8 +46,7 @@ public class BrickerGameManager extends GameManager {
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
     //    private Counter lifeCounter = new Counter(INIT_LIVES);
-    private static final Renderable BORDER_RENDERABLE =
-            new RectangleRenderable(new Color(80, 140, 250));
+
     private Ball ball;
     private Vector2 windowDimentions;
     private WindowController windowController;
@@ -101,10 +98,13 @@ public class BrickerGameManager extends GameManager {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
 //        createAIPaddle(imageReader, windowDimentions);
-
-        createBricks(imageReader, inputListener, windowDimentions,
-                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
-                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)});
+        Vector2 heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
+        StrategyManager strategyManager = new StrategyManager(gameObjects(),bricksCounter,imageReader,
+                soundReader,BALL_SPEED,puckList,BALL_RADIUS,heartDimentions,lives,HEART_IMG_PATH);
+        createBricks(imageReader, inputListener, windowDimentions,strategyManager.generateStrategies());
+//                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
+//                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)}
+//                new ExtraLifeStrategy());
         createBorders(windowDimentions);
         createBackground(imageReader, windowDimentions);
         createNumericCounter();
@@ -124,7 +124,6 @@ public class BrickerGameManager extends GameManager {
 
     private void createHeartsCounter(ImageReader imageReader)
     {
-
         Vector2 dimensions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
         Vector2 beginHeartsPos = new Vector2(BORDER_WIDTH+ GRAPHIC_COUNTER_SIZE, windowDimentions.y()
                 - 2 * (BASIC_SPACE + PADDLE_HEIGHT));

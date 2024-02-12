@@ -19,9 +19,6 @@ public class Ball extends GameObject {
     private static final String BALL_TAG = "Ball";
 
 
-
-
-
     /**
      * Construct a new GameObject instance.
      *

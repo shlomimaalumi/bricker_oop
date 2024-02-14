@@ -46,8 +46,7 @@ public class StrategyManager implements CollisionStrategy {
                            Vector2 windowDimensions,
                            int distFromEnd,
                            Vector2 paddleDimensions,
-                           String puddleImgPath, Counter collisionCounter
-    ) {
+                           String puddleImgPath, Counter collisionCounter) {
         this.gameObjects = gameObjects;
         this.bricksCounter = bricksCounter;
         this.imageReader = imageReader;

@@ -32,6 +32,7 @@ public class AddPucksStrategty implements CollisionStrategy {
     private final Counter bricksCounter;
     private final Vector2 puckDimensions;
     private ArrayList<Puck> puckList;
+    private BasicCollisionStrategy basicCollision;
 
 
     public AddPucksStrategty(GameObjectCollection gameObjects, Counter bricksCounter,
@@ -44,15 +45,14 @@ public class AddPucksStrategty implements CollisionStrategy {
         this.puckSpeed = ballSpeed;
         this.puckList = puckList;
         this.puckDimensions = new Vector2(ballSize, ballSize).mult(PUCK_RATIO_FROM_BALL);
+        basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
+
     }
 
     @Override
     public void onCollision(GameObject thisObj, GameObject otherObj) {
-        if (thisObj.getTag().equals(Brick.BRICK_TAG) && gameObjects.removeGameObject(thisObj, Layer.STATIC_OBJECTS)) {
-            bricksCounter.decrement();
-        }
+        basicCollision.onCollision(thisObj, otherObj);
         Vector2 puckTopLeftCorner = otherObj.getTopLeftCorner();
-//        super.onCollision(thisObj, otherObj);
         for (int i = 0; i < PUCKS_TO_ADD; i++) {
             Puck puck = new Puck(puckTopLeftCorner, puckDimensions, image, sound);
             setPuckVelocity(puck);

@@ -28,6 +28,7 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
     private static Paddle LOGGER_PADDLE = null;
     private static Counter collisionCounter = null;
     private final ImageRenderable image;
+    private BasicCollisionStrategy basicCollision;
 
 
     public ExtraPaddleStrategy(GameObjectCollection gameObjects, Vector2 windowDimensions,
@@ -47,6 +48,7 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
         if (this.collisionCounter == null) {
             this.collisionCounter = collisionCounter;
         }
+        basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
 
 
     }
@@ -59,9 +61,7 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
 
 
     public void onCollision(GameObject thisObj, GameObject otherObj) {
-        if (thisObj.getTag().equals(Brick.BRICK_TAG) && gameObjects.removeGameObject(thisObj, Layer.STATIC_OBJECTS)) {
-            bricksCounter.decrement();
-        }
+        basicCollision.onCollision(thisObj, otherObj);
         if (collisionCounter.value() == NO_COLLISIONS) {
             paddle = new ExtraPaddle(paddleLocation, paddleDimensions, image, inputListener, windowDimensions,
                     disFromEnd, gameObjects, collisionCounter);

@@ -20,6 +20,7 @@ public class ExtraLifeStrategy implements CollisionStrategy {
     private static final int VEL_X = 0;
     private static final Vector2 HEART_VELOCITY = new Vector2(VEL_X, VEL_Y);
     private Counter livesCounter;
+    private BasicCollisionStrategy basicCollision;
 
     public ExtraLifeStrategy(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, Vector2 heartDimensions, String heartImgPath,
@@ -30,14 +31,13 @@ public class ExtraLifeStrategy implements CollisionStrategy {
         this.livesCounter = livesCounter;
         this.image = imageReader.readImage(heartImgPath, true);
         this.heartDimensions = heartDimensions;
+        basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
     }
 
 
     @Override
     public void onCollision(GameObject thisObj, GameObject otherObj) {
-        if (thisObj.getTag().equals(Brick.BRICK_TAG) && gameObjects.removeGameObject(thisObj, Layer.STATIC_OBJECTS)) {
-            bricksCounter.decrement();
-        }
+        basicCollision.onCollision(thisObj, otherObj);
         Vector2 topLeftCorner = thisObj.getCenter().add(heartDimensions.multX(-HALF).multY(0));
         Heart heart = new Heart(topLeftCorner, heartDimensions, image,
                 livesCounter

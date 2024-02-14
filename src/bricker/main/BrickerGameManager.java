@@ -62,6 +62,7 @@ public class BrickerGameManager extends GameManager {
     //    private TextRenderable textRenderable;
 //    private GameObject numericCounter;
     private Counter bricksCounter;
+    private static final Counter collisionCounter = new Counter(0);
 //    private CollisionStrategy collisionStrategy;
 
     public BrickerGameManager(String windowTitle, Vector2 windowDimentions) {
@@ -71,7 +72,6 @@ public class BrickerGameManager extends GameManager {
         this.lives = new Counter(INIT_LIVES);
         this.puckList = new ArrayList<>();
         this.heartList = new ArrayList<>();
-
         this.bricksCounter = new Counter((bricksInRow * bricksInCol));
     }
 
@@ -107,7 +107,8 @@ public class BrickerGameManager extends GameManager {
         Vector2 heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
         StrategyManager strategyManager = new StrategyManager(gameObjects(), bricksCounter, imageReader,
                 soundReader, BALL_SPEED, puckList, BALL_RADIUS, heartDimentions, lives, HEART_IMG_PATH,
-                heartList);
+                heartList, inputListener, windowDimentions, BORDER_WIDTH, createPaddleDimension(),
+                PADDLE_IMG_PATH, collisionCounter);
         createBricks(imageReader, inputListener, windowDimentions, strategyManager.generateStrategies());
 //                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
 //                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)}
@@ -291,6 +292,7 @@ public class BrickerGameManager extends GameManager {
     private void clearGame() {
         clearHears();
         clearPucks();
+        collisionCounter.reset();
     }
 
     private void checkForGameEnd() {

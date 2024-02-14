@@ -10,7 +10,7 @@ public class AIPaddle extends GameObject {
     private final int  borderWidth;
     private final Vector2 windowDimensions;
     private GameObject objectToFollow;
-    private static final String AI_PAD_TAG = "AI paddle";
+    public static final String AI_PAD_TAG = "AI paddle";
 
 
     /**

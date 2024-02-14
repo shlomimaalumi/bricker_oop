@@ -16,7 +16,7 @@ public class Ball extends GameObject {
     private int collisionCounter;
     private static final int INITIAL_COUNTER = 0;
     private static final int COLLISION = 1;
-    private static final String BALL_TAG = "Ball";
+    public static final String BALL_TAG = "Ball";
 
 
     /**

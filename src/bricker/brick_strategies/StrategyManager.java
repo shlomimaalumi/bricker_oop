@@ -18,6 +18,7 @@ import danogl.util.Vector2;
 public class StrategyManager implements CollisionStrategy {
     private static final String PUCK_IMG_PATH = "assets/mockBall.png";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
+    private static final String PADDLE_IMG_PATH = "assets/paddle.png";
     private GameObjectCollection gameObjects;
     private Counter bricksCounter;
     private ImageReader imageReader;

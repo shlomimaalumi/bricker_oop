@@ -12,7 +12,7 @@ import danogl.util.Vector2;
 import java.util.Random;
 
 public class Puck extends Ball {
-    private static final String PUCK_TAG = "Puck";
+    public static final String PUCK_TAG = "Puck";
 
 
 

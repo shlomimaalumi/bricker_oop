@@ -15,6 +15,7 @@ public class Paddle extends GameObject {
     public static final String PADDLE_TAG = "Paddle";
 
 
+
     /**
      * Construct a new GameObject instance.
      *
@@ -33,6 +34,7 @@ public class Paddle extends GameObject {
         this.borderWidth = disFromEnd;
         setTag(PADDLE_TAG);
     }
+
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);

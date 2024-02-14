@@ -67,7 +67,7 @@ public class StrategyManager implements CollisionStrategy {
     }
 
     public CollisionStrategy[] generateStrategies() {
-        return new CollisionStrategy[]{extraPaddleStrategy()};
+        return new CollisionStrategy[]{changeCameraStrategy()};
     }
 
     private CollisionStrategy basicStrategy() {

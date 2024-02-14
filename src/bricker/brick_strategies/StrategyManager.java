@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 import bricker.game_objects.Heart;
 import bricker.game_objects.Puck;
+import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
 import danogl.gui.Sound;
 import danogl.gui.SoundReader;
+import danogl.gui.UserInputListener;
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
@@ -27,12 +29,24 @@ public class StrategyManager implements CollisionStrategy {
     private Counter livesCounter;
     private String imagePath;
     private final ArrayList<Heart> heartList;
+    private Vector2 windowDimensions;
+    private int distFromEnd;
+    private static Counter collisionCounter;
+    private Vector2 paddleDimensions;
+    private String puddleImgPath;
+    private UserInputListener inputListener;
 
     public StrategyManager(GameObjectCollection gameObjects, Counter bricksCounter,
                            ImageReader imageReader, SoundReader soundReader, float ballSpeed,
                            ArrayList<Puck> puckList, float ballSize,
                            Vector2 heartDimensions, Counter livesCounter, String imagePath,
-                           ArrayList<Heart> heartList) {
+                           ArrayList<Heart> heartList,
+                           UserInputListener inputListener,
+                           Vector2 windowDimensions,
+                           int distFromEnd,
+                           Vector2 paddleDimensions,
+                           String puddleImgPath, Counter collisionCounter
+    ) {
         this.gameObjects = gameObjects;
         this.bricksCounter = bricksCounter;
         this.imageReader = imageReader;
@@ -44,10 +58,16 @@ public class StrategyManager implements CollisionStrategy {
         this.livesCounter = livesCounter;
         this.imagePath = imagePath;
         this.heartList = heartList;
+        this.inputListener = inputListener;
+        this.windowDimensions = windowDimensions;
+        this.puddleImgPath = puddleImgPath;
+        this.paddleDimensions = paddleDimensions;
+        this.distFromEnd = distFromEnd;
+        this.collisionCounter = collisionCounter;
     }
 
     public CollisionStrategy[] generateStrategies() {
-        return new CollisionStrategy[]{ basicStrategy(),extraHeartStrategy(),addPucksStrategy()};
+        return new CollisionStrategy[]{extraPaddleStrategy()};
     }
 
     private CollisionStrategy basicStrategy() {
@@ -60,7 +80,13 @@ public class StrategyManager implements CollisionStrategy {
     }
 
     private CollisionStrategy extraHeartStrategy() {
-        return new ExtraLifeStrategy(gameObjects, bricksCounter, imageReader, heartDimensions, imagePath,livesCounter);
+        return new ExtraLifeStrategy(gameObjects, bricksCounter, imageReader, heartDimensions, imagePath, livesCounter);
+    }
+
+    private CollisionStrategy extraPaddleStrategy() {
+        return new ExtraPaddleStrategy(gameObjects, windowDimensions, inputListener, imageReader
+                , distFromEnd, paddleDimensions, puddleImgPath, bricksCounter,collisionCounter);
+
     }
 
     @Override

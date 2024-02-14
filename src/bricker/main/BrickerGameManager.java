@@ -177,11 +177,16 @@ public class BrickerGameManager extends GameManager {
                 PADDLE_IMG_PATH, false);
         Paddle paddle = new Paddle(
                 Vector2.ZERO,
-                new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT),
+                createPaddleDimension(),
                 paddleImage, inputListener, windowDimensions, BORDER_WIDTH);
         paddle.setCenter(
                 new Vector2(windowDimensions.x() / 2, (int) windowDimensions.y() - BASIC_SPACE));
         gameObjects().addGameObject(paddle);
+    }
+
+    private Vector2 createPaddleDimension() {
+
+        return new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
     private void createAIPaddle(ImageReader imageReader, Vector2 windowDimensions) {

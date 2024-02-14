@@ -8,11 +8,18 @@ import danogl.util.Vector2;
 import java.awt.event.KeyEvent;
 
 public class Paddle extends GameObject {
+    /**
+     * Tag used to identify the paddle in the scene.
+     */
+    public static final String PADDLE_TAG = "Paddle";
+
+    /**
+     * Movement speed of the paddle in pixels per second.
+     */
     private static final float MOVEMENT_SPEED = 400;
     private final UserInputListener inputListener;
     private final Vector2 windowDimensions;
     private final int borderWidth;
-    public static final String PADDLE_TAG = "Paddle";
 
 
     /**

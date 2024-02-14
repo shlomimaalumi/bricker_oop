@@ -83,6 +83,9 @@ public class StrategyFactory implements CollisionStrategy {
         } else {
             addSpecialStrategies(collisionStrategies);
         }
+
+
+
         return collisionStrategies;
     }
 
@@ -103,6 +106,11 @@ public class StrategyFactory implements CollisionStrategy {
     private CollisionStrategy extraPaddleStrategy() {
         return new ExtraPaddleStrategy(gameObjects, windowDimensions, inputListener, imageReader
                 , distFromEnd, paddleDimensions, puddleImgPath, bricksCounter, collisionCounter);
+    }
+
+    private CollisionStrategy changeCameraStrategy() {
+        return new ChangeCameraStrategy(gameObjects, bricksCounter, brickerGameManager, windowDimensions,
+                ball);
     }
 
     private CollisionStrategy changeCameraStrategy() {

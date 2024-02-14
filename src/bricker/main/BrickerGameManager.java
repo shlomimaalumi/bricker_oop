@@ -44,6 +44,8 @@ public class BrickerGameManager extends GameManager {
     private static final float BALL_SPEED = 250;
     private static final float BASIC_SPACE = 20;
     private static final float HALF = 0.5f;
+    private static final float BG_FACTOR = 1.1f*2;
+
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
     private static final int BALL_HITS_TO_RESET_CAMERA = 4;
@@ -66,6 +68,7 @@ public class BrickerGameManager extends GameManager {
 //    private GameObject numericCounter;
     private Counter bricksCounter;
     private static final Counter collisionCounter = new Counter(0);
+    private Vector2 heartDimentions;
 //    private CollisionStrategy collisionStrategy;
 
     public BrickerGameManager(String windowTitle, Vector2 windowDimentions) {
@@ -106,13 +109,13 @@ public class BrickerGameManager extends GameManager {
     private void createObjects(ImageReader imageReader, SoundReader soundReader) {
         createBall(imageReader, soundReader, windowController);
         createPaddle(imageReader, windowDimentions, inputListener);
-//        createAIPaddle(imageReader, windowDimentions);
-        Vector2 heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
+        heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
         StrategyManager strategyManager = new StrategyManager(gameObjects(), bricksCounter, imageReader,
                 soundReader, BALL_SPEED, puckList, BALL_RADIUS, heartDimentions, lives, HEART_IMG_PATH,
                 heartList, inputListener, windowDimentions, BORDER_WIDTH, createPaddleDimension(),
                 PADDLE_IMG_PATH, collisionCounter, ball, this);
-        createBricks(imageReader, inputListener, windowDimentions, strategyManager.generateStrategies());
+        createBricks(imageReader, inputListener, windowDimentions,strategyManager);
+
 //                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
 //                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)}
 //                new ExtraLifeStrategy());
@@ -230,15 +233,15 @@ public class BrickerGameManager extends GameManager {
                         new Vector2(BORDER_WIDTH, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
     }
 
-    private void createBrick(Renderable brickImage, Vector2 brickVector, Vector2 windowDimentions,
-                             CollisionStrategy[] collisionStrategy) {
-        Brick brick = new Brick(brickVector, windowDimentions, brickImage, collisionStrategy);
+    private void createBrick(Renderable brickImage, Vector2 brickVector, Vector2 windowDimentions,StrategyManager strategyManager) {
+
+        Brick brick = new Brick(brickVector, windowDimentions, brickImage, strategyManager.generateStrategies());
         gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
     }
 
 
     private void createBricks(ImageReader imageReader, UserInputListener inputListener,
-                              Vector2 windowDimentions, CollisionStrategy[] collisionStrategies) {
+                              Vector2 windowDimentions,StrategyManager strategyManager) {
         //TODO take care of this calc
         Renderable brickImage =
                 imageReader.readImage(BRICK_ING_PATH, false);
@@ -251,7 +254,7 @@ public class BrickerGameManager extends GameManager {
                 float x = 2 * BORDER_WIDTH + i * brickWidth + (i - 1) * SPACE_BETWEEN_BRICKS;
                 float y = 2 * BORDER_WIDTH + j * brickHeight + (j - 1) * SPACE_BETWEEN_BRICKS;
                 Vector2 location = new Vector2(x, y);
-                createBrick(brickImage, location, brickVector, collisionStrategies);
+                createBrick(brickImage, location, brickVector,strategyManager);
             }
         }
     }
@@ -345,7 +348,11 @@ public class BrickerGameManager extends GameManager {
     private void createBackground(ImageReader imageReader, Vector2 windowDimensions) {
         Renderable backgroundImage =
                 imageReader.readImage(BACKGROUND_IMG_PATH, false);
-        GameObject backgroundObj = new GameObject(Vector2.ZERO, windowDimensions, backgroundImage);
+        float minX=windowDimensions.x()*BG_FACTOR;
+        Vector2 topLeft =
+                Vector2.ZERO.subtract(windowDimensions.mult(1/BG_FACTOR)).subtract(new Vector2(50,10));
+        GameObject backgroundObj = new GameObject(topLeft, windowDimensions.mult(BG_FACTOR),
+                backgroundImage);
         gameObjects().addGameObject(backgroundObj, Layer.BACKGROUND);
         //DARK_BG2_small
     }

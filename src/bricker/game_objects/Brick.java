@@ -9,11 +9,13 @@ import danogl.gui.rendering.Renderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
+import java.util.ArrayList;
+
 public class Brick extends GameObject {
     public static final String BRICK_TAG = "Brick";
 
 
-    private CollisionStrategy[] collisionStrategies;
+    private ArrayList<CollisionStrategy> collisionStrategies;
 
     /**
      * Construct a new GameObject instance.
@@ -26,7 +28,7 @@ public class Brick extends GameObject {
      */
 
     public Brick(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
-                 CollisionStrategy[] collisionStrategies) {
+                 ArrayList<CollisionStrategy> collisionStrategies) {
         super(topLeftCorner, dimensions, renderable);
         this.collisionStrategies = collisionStrategies;
         setTag(BRICK_TAG);

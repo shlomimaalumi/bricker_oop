@@ -1,7 +1,7 @@
 package bricker.brick_strategies;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import bricker.game_objects.Ball;
 import bricker.game_objects.Heart;
@@ -10,7 +10,6 @@ import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
-import danogl.gui.Sound;
 import danogl.gui.SoundReader;
 import danogl.gui.UserInputListener;
 import danogl.util.Counter;
@@ -20,6 +19,11 @@ public class StrategyManager implements CollisionStrategy {
     private static final String PUCK_IMG_PATH = "assets/mockBall.png";
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
     private static final String PADDLE_IMG_PATH = "assets/paddle.png";
+    private static final int NEXT_ROUND = 1;
+    private static final int LAST_STRATEGIES_CHOOSE = 2;
+    private static final int SPECIEL_STRATEGIES_AMOUNT = 5;
+    private static final int SPECIEL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE = 4;
+    private int strategyNums;
     private GameObjectCollection gameObjects;
     private Counter bricksCounter;
     private ImageReader imageReader;
@@ -52,8 +56,7 @@ public class StrategyManager implements CollisionStrategy {
                            String puddleImgPath, Counter collisionCounter,
 
 
-
-                        Ball ball, GameManager brickerGameManager) {
+                           Ball ball, GameManager brickerGameManager) {
         this.gameObjects = gameObjects;
         this.bricksCounter = bricksCounter;
         this.imageReader = imageReader;
@@ -73,10 +76,18 @@ public class StrategyManager implements CollisionStrategy {
         this.collisionCounter = collisionCounter;
         this.ball = ball;
         this.brickerGameManager = brickerGameManager;
+        this.strategyNums = 1;
     }
 
-    public CollisionStrategy[] generateStrategies() {
-        return new CollisionStrategy[]{changeCameraStrategy()};
+    public ArrayList<CollisionStrategy> generateStrategies() {
+        ArrayList<CollisionStrategy> collisionStrategies = new ArrayList<CollisionStrategy>();
+        if (new Random().nextBoolean()) {
+            collisionStrategies.add(basicStrategy());
+        } else {
+            addSpiecialsStrategies(collisionStrategies);
+        }
+
+        return collisionStrategies;
     }
 
     private CollisionStrategy basicStrategy() {
@@ -94,10 +105,32 @@ public class StrategyManager implements CollisionStrategy {
 
     private CollisionStrategy extraPaddleStrategy() {
         return new ExtraPaddleStrategy(gameObjects, windowDimensions, inputListener, imageReader
-                , distFromEnd, paddleDimensions, puddleImgPath, bricksCounter,collisionCounter);
+                , distFromEnd, paddleDimensions, puddleImgPath, bricksCounter, collisionCounter);
     }
-    private CollisionStrategy changeCameraStrategy(){
-        return new ChangeCameraStrategy(gameObjects,bricksCounter,brickerGameManager,windowDimensions,ball);
+
+    private CollisionStrategy changeCameraStrategy() {
+        return new ChangeCameraStrategy(gameObjects, bricksCounter, brickerGameManager, windowDimensions, ball);
+    }
+
+    private void addSpiecialsStrategies(ArrayList<CollisionStrategy> collisionStrategies) {
+        int max_index = SPECIEL_STRATEGIES_AMOUNT;
+        if (this.strategyNums == LAST_STRATEGIES_CHOOSE) {
+            max_index = SPECIEL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE;
+        }
+        Random random = new Random();
+        int index = random.nextInt(max_index);
+        switch (index) {
+            case 0 -> collisionStrategies.add(addPucksStrategy());
+//            case 1 -> collisionStrategies.add(extraPaddleStrategy());
+            case 1 -> collisionStrategies.add(changeCameraStrategy());
+            case 2 -> collisionStrategies.add(changeCameraStrategy());
+            case 3 -> collisionStrategies.add(changeCameraStrategy());
+//            case 3 -> collisionStrategies.add(extraHeartStrategy());
+            case 4 -> {
+                strategyNums += NEXT_ROUND;
+                addSpiecialsStrategies(collisionStrategies);
+            }
+        }
     }
 
     @Override

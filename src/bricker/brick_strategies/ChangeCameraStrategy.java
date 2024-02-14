@@ -12,6 +12,7 @@ import danogl.util.Vector2;
 
 public class ChangeCameraStrategy implements CollisionStrategy {
     private static final int MAX_COLLISIONS = 4;
+    private static final float FACTOR = 1.2f;
     private final Vector2 windowDimensions;
     private final GameManager gameManager;
     private final Ball ball;
@@ -32,7 +33,7 @@ public class ChangeCameraStrategy implements CollisionStrategy {
                 new Camera(
                         ball, //object to follow
                         Vector2.ZERO, //follow the center of the object
-                        windowDimensions.mult(1.2f), //widen the frame a bit
+                        windowDimensions.mult(FACTOR), //widen the frame a bit
                         windowDimensions //share the window dimensions
                 )
         );

@@ -1,22 +1,15 @@
 package bricker.brick_strategies;
 
 import java.util.ArrayList;
-
-import bricker.game_objects.Ball;
-import bricker.game_objects.Brick;
 import bricker.game_objects.Puck;
-import bricker.main.BrickerGameManager;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
-import danogl.collisions.Layer;
 import danogl.gui.ImageReader;
 import danogl.gui.Sound;
 import danogl.gui.SoundReader;
-import danogl.gui.WindowController;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
-
 import java.util.Random;
 
 
@@ -29,7 +22,6 @@ public class AddPucksStrategty implements CollisionStrategy {
     private final Renderable image;
     private final Sound sound;
     private final float puckSpeed;
-    private final Counter bricksCounter;
     private final Vector2 puckDimensions;
     private final ArrayList<Puck> puckList;
     private final BasicCollisionStrategy basicCollision;
@@ -37,11 +29,9 @@ public class AddPucksStrategty implements CollisionStrategy {
 
     public AddPucksStrategty(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, SoundReader soundReader, float ballSpeed, ArrayList<Puck> puckList, float ballSize) {
-//        super(gameObjects,bricksCounter);
         this.gameObjects = gameObjects;
         this.image = imageReader.readImage(PUCK_IMG_PATH, true);
         this.sound = soundReader.readSound(COLLISION_SOUND_PATH);
-        this.bricksCounter = bricksCounter;
         this.puckSpeed = ballSpeed;
         this.puckList = puckList;
         this.puckDimensions = new Vector2(ballSize, ballSize).mult(PUCK_RATIO_FROM_BALL);

@@ -1,11 +1,11 @@
 package bricker.brick_strategies;
 
 import bricker.game_objects.ExtraPaddle;
+import bricker.game_objects.Heart;
 import bricker.game_objects.Paddle;
+import bricker.game_objects.Puck;
 import danogl.GameObject;
-import bricker.game_objects.Brick;
 import danogl.collisions.GameObjectCollection;
-import danogl.collisions.Layer;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
 import danogl.util.Counter;
@@ -18,19 +18,16 @@ import java.util.ArrayList;
 public class ExtraPaddleStrategy implements CollisionStrategy {
     private static final int NO_COLLISIONS = 0;
     private static final int MAX_COLLISIONS = 4;
-    private GameObjectCollection gameObjects;
+    private final GameObjectCollection gameObjects;
     private final Vector2 paddleLocation;
     private final Vector2 windowDimensions;
     private final UserInputListener inputListener;
     private final int disFromEnd;
     private final Vector2 paddleDimensions;
-    private final Counter bricksCounter;
-    private final ImageReader imageReader;
-    private Paddle paddle;
-    private static Paddle LOGGER_PADDLE = null;
     private static Counter collisionCounter = null;
     private final ImageRenderable image;
-    private BasicCollisionStrategy basicCollision;
+    private final BasicCollisionStrategy basicCollision;
+
 
 
     public ExtraPaddleStrategy(GameObjectCollection gameObjects, Vector2 windowDimensions,
@@ -42,13 +39,11 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
         this.windowDimensions = windowDimensions;
         this.inputListener = inputListener;
         this.paddleDimensions = paddleDimensions;
-        this.bricksCounter = bricksCounter;
         this.paddleLocation = getExtraPaddleLocation();
         this.disFromEnd = disFromEnd;
-        this.imageReader = imageReader;
         this.image = imageReader.readImage(paddleImgPath, false);
-        if (this.collisionCounter == null) {
-            this.collisionCounter = collisionCounter;
+        if (ExtraPaddleStrategy.collisionCounter == null) {
+            ExtraPaddleStrategy.collisionCounter = collisionCounter;
         }
         basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
 
@@ -66,8 +61,8 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
     public void onCollision(GameObject thisObj, GameObject otherObj) {
         basicCollision.onCollision(thisObj, otherObj);
         if (collisionCounter.value() == NO_COLLISIONS) {
-            paddle = new ExtraPaddle(paddleLocation, paddleDimensions, image, inputListener, windowDimensions,
-                    disFromEnd, gameObjects, collisionCounter);
+            Paddle paddle = new ExtraPaddle(paddleLocation, paddleDimensions, image, inputListener,
+                    windowDimensions, disFromEnd, gameObjects, collisionCounter);
             collisionCounter.increaseBy(MAX_COLLISIONS);
             gameObjects.addGameObject(paddle);
         }

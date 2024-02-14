@@ -18,8 +18,8 @@ import java.util.Random;
 public class StrategyFactory implements CollisionStrategy {
     private static final int NEXT_ROUND = 1;
     private static final int LAST_STRATEGIES_CHOOSE = 2;
-    private static final int SPECIEL_STRATEGIES_AMOUNT = 5;
-    private static final int SPECIEL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE = 4;
+    private static final int SPECIAL_STRATEGIES_AMOUNT = 5;
+    private static final int SPECIAL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE = 4;
     private int strategyNums;
     private final GameObjectCollection gameObjects;
     private final Counter bricksCounter;
@@ -69,20 +69,20 @@ public class StrategyFactory implements CollisionStrategy {
         this.puddleImgPath = puddleImgPath;
         this.paddleDimensions = paddleDimensions;
         this.distFromEnd = distFromEnd;
-        this.collisionCounter = collisionCounter;
+        StrategyFactory.collisionCounter = collisionCounter;
+        this.hearsList = hearsList;
         this.ball = ball;
         this.brickerGameManager = brickerGameManager;
         this.strategyNums = 1;
     }
 
     public ArrayList<CollisionStrategy> generateStrategies() {
-        ArrayList<CollisionStrategy> collisionStrategies = new ArrayList<CollisionStrategy>();
+        ArrayList<CollisionStrategy> collisionStrategies = new ArrayList<>();
         if (new Random().nextBoolean()) {
             collisionStrategies.add(basicStrategy());
         } else {
-            addSpiecialsStrategies(collisionStrategies);
+            addSpecialStrategies(collisionStrategies);
         }
-
         return collisionStrategies;
     }
 
@@ -91,12 +91,13 @@ public class StrategyFactory implements CollisionStrategy {
     }
 
     private CollisionStrategy addPucksStrategy() {
-        return new AddPucksStrategty(gameObjects, bricksCounter, imageReader, soundReader, ballSpeed, puckList,
-                ballSize);
+        return new AddPucksStrategty(gameObjects, bricksCounter, imageReader, soundReader, ballSpeed,
+                puckList, ballSize);
     }
 
     private CollisionStrategy extraHeartStrategy() {
-        return new ExtraLifeStrategy(gameObjects, bricksCounter, imageReader, heartDimensions, imagePath, livesCounter);
+        return new ExtraLifeStrategy(gameObjects, bricksCounter, imageReader, heartDimensions, imagePath,
+                livesCounter, hearsList);
     }
 
     private CollisionStrategy extraPaddleStrategy() {
@@ -105,13 +106,14 @@ public class StrategyFactory implements CollisionStrategy {
     }
 
     private CollisionStrategy changeCameraStrategy() {
-        return new ChangeCameraStrategy(gameObjects, bricksCounter, brickerGameManager, windowDimensions, ball);
+        return new ChangeCameraStrategy(gameObjects, bricksCounter, brickerGameManager, windowDimensions,
+                ball);
     }
 
-    private void addSpiecialsStrategies(ArrayList<CollisionStrategy> collisionStrategies) {
-        int max_index = SPECIEL_STRATEGIES_AMOUNT;
+    private void addSpecialStrategies(ArrayList<CollisionStrategy> collisionStrategies) {
+        int max_index = SPECIAL_STRATEGIES_AMOUNT;
         if (this.strategyNums == LAST_STRATEGIES_CHOOSE) {
-            max_index = SPECIEL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE;
+            max_index = SPECIAL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE;
         }
         Random random = new Random();
         int index = random.nextInt(max_index);
@@ -122,7 +124,7 @@ public class StrategyFactory implements CollisionStrategy {
             case 3 -> collisionStrategies.add(extraHeartStrategy());
             case 4 -> {
                 strategyNums += NEXT_ROUND;
-                addSpiecialsStrategies(collisionStrategies);
+                addSpecialStrategies(collisionStrategies);
             }
         }
     }

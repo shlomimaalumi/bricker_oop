@@ -50,7 +50,6 @@ public class BrickerGameManager extends GameManager {
     private static final int BALL_HITS_TO_RESET_CAMERA = 4;
     //TODO document it
     private static final int HIT_OFFSET = 1;
-    //    private Counter lifeCounter = new Counter(INIT_LIVES);
 
     private Ball ball;
     private Vector2 windowDimentions;
@@ -63,8 +62,6 @@ public class BrickerGameManager extends GameManager {
     private final ArrayList<Heart> heartList;
     private final Counter bricksCounter;
     private static final Counter collisionCounter = new Counter(0);
-    private Vector2 heartDimentions;
-//    private CollisionStrategy collisionStrategy;
 
     public BrickerGameManager(String windowTitle, Vector2 windowDimentions) {
         super(windowTitle, windowDimentions);
@@ -93,14 +90,11 @@ public class BrickerGameManager extends GameManager {
         this.windowController = windowController;
         this.inputListener = inputListener;
         this.windowDimentions = windowController.getWindowDimensions();
-        this.imageReader = imageReader;
-        this.soundReader = soundReader;
-//        this.lives=3;
         createObjects(imageReader, soundReader);
     }
 
     private void createObjects(ImageReader imageReader, SoundReader soundReader) {
-        createBall(imageReader, soundReader, windowController);
+        createBall(imageReader, soundReader);
         createPaddle(imageReader, windowDimentions, inputListener);
         Vector2 heartDimentions = new Vector2(GRAPHIC_COUNTER_SIZE, GRAPHIC_COUNTER_SIZE);
         StrategyFactory strategyFactory = new StrategyFactory(gameObjects(), bricksCounter, imageReader,
@@ -112,7 +106,6 @@ public class BrickerGameManager extends GameManager {
         createBackground(imageReader, windowDimentions);
         createNumericCounter();
         createHeartsCounter(imageReader);
-
     }
 
 
@@ -171,7 +164,6 @@ public class BrickerGameManager extends GameManager {
     }
 
     private Vector2 createPaddleDimension() {
-
         return new Vector2(PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 

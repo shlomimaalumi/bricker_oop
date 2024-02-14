@@ -12,6 +12,8 @@ import danogl.util.Counter;
 import danogl.util.Vector2;
 import danogl.gui.rendering.ImageRenderable;
 
+import java.util.ArrayList;
+
 
 public class ExtraPaddleStrategy implements CollisionStrategy {
     private static final int NO_COLLISIONS = 0;
@@ -49,6 +51,7 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
             this.collisionCounter = collisionCounter;
         }
         basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
+
 
 
     }

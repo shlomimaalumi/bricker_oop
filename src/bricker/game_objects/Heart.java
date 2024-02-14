@@ -8,8 +8,13 @@ import danogl.util.Counter;
 import danogl.util.Vector2;
 
 public class Heart extends GameObject {
+
+    public static final String HEART_TAG = "Heart";
+    private static final int MAX_SIZE = 4;
+    private final Counter lives;
+    private final GameObjectCollection gameObjects;
     /**
-     * Construct a new GameObject instance.
+     * Construct a new Heart instance.
      *
      * @param topLeftCorner Position of the object, in window coordinates (pixels). Note that (0,0) is the
      * top-left corner of the window.
@@ -17,11 +22,6 @@ public class Heart extends GameObject {
      * @param renderable    The renderable representing the object. Can be null, in which case the GameObject
      * will not be rendered.
      */
-
-    public static final String HEART_TAG = "Heart";
-    private static final int MAX_SIZE = 4;
-    private Counter lives;
-    private final GameObjectCollection gameObjects;
 
     public Heart(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Counter lives,
                  GameObjectCollection gameObjects) {

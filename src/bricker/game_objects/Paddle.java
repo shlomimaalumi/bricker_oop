@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 public class Paddle extends GameObject {
     private static final float MOVEMENT_SPEED = 400;
-    private UserInputListener inputListener;
+    private final UserInputListener inputListener;
     private final Vector2 windowDimensions;
     private final int borderWidth;
     public static final String PADDLE_TAG = "Paddle";

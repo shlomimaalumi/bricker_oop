@@ -10,13 +10,13 @@ import danogl.util.Vector2;
 import java.awt.*;
 
 public class NumericLifeCounter extends GameObject {
-    private  GameObjectCollection gameObjects;
-    private  Vector2 topLeftCorner;
-    private  Vector2 dimensions;
+    private final GameObjectCollection gameObjects;
+    private final Vector2 topLeftCorner;
+    private final Vector2 dimensions;
     private  int currentLives;
     private  TextRenderable renderable;
     private  GameObject numericCounter;
-    private Counter lives;
+    private final Counter lives;
     private static final String NUMERIC_COUNTER_TAG = "Numeric counter";
 
 

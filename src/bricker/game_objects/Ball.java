@@ -2,14 +2,11 @@ package bricker.game_objects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
-import danogl.gui.ImageReader;
 import danogl.gui.Sound;
-import danogl.gui.SoundReader;
-import danogl.gui.WindowController;
+
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
-import java.util.Random;
 
 public class Ball extends GameObject {
     private final Sound collisionSound;
@@ -27,7 +24,7 @@ public class Ball extends GameObject {
      * @param dimensions    Width and height in window coordinates.
      * @param renderable    The renderable representing the object. Can be null, in which case the GameObject
      *                      will not be rendered.
-     * @param sound
+     * @param sound         the sound that will be heard during a collision
      */
 
     public Ball(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Sound sound) {

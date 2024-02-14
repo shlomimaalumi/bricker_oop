@@ -3,10 +3,7 @@ package bricker.game_objects;
 import bricker.brick_strategies.CollisionStrategy;
 import danogl.GameObject;
 import danogl.collisions.Collision;
-import danogl.collisions.GameObjectCollection;
-import danogl.collisions.Layer;
 import danogl.gui.rendering.Renderable;
-import danogl.util.Counter;
 import danogl.util.Vector2;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ public class Brick extends GameObject {
     public static final String BRICK_TAG = "Brick";
 
 
-    private ArrayList<CollisionStrategy> collisionStrategies;
+    private final ArrayList<CollisionStrategy> collisionStrategies;
 
     /**
      * Construct a new GameObject instance.

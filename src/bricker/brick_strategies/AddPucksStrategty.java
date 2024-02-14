@@ -31,8 +31,8 @@ public class AddPucksStrategty implements CollisionStrategy {
     private final float puckSpeed;
     private final Counter bricksCounter;
     private final Vector2 puckDimensions;
-    private ArrayList<Puck> puckList;
-    private BasicCollisionStrategy basicCollision;
+    private final ArrayList<Puck> puckList;
+    private final BasicCollisionStrategy basicCollision;
 
 
     public AddPucksStrategty(GameObjectCollection gameObjects, Counter bricksCounter,

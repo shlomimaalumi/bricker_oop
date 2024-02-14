@@ -10,6 +10,8 @@ import danogl.gui.rendering.ImageRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
+import java.util.ArrayList;
+
 public class ExtraLifeStrategy implements CollisionStrategy {
     private static final float HALF = 0.5f;
     private final ImageRenderable image;
@@ -24,7 +26,7 @@ public class ExtraLifeStrategy implements CollisionStrategy {
 
     public ExtraLifeStrategy(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, Vector2 heartDimensions, String heartImgPath,
-                             Counter livesCounter) {
+                             Counter livesCounter,ArrayList<Heart> heartsList) {
         super();
         this.bricksCounter = bricksCounter;
         this.gameObjects = gameObjects;
@@ -32,6 +34,7 @@ public class ExtraLifeStrategy implements CollisionStrategy {
         this.image = imageReader.readImage(heartImgPath, true);
         this.heartDimensions = heartDimensions;
         basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
+        this.heartsList = heartsList;
     }
 
 

@@ -5,13 +5,11 @@ import danogl.GameManager;
 import danogl.GameObject;
 
 import danogl.collisions.GameObjectCollection;
-import danogl.gui.WindowController;
 import danogl.gui.rendering.Camera;
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
 public class ChangeCameraStrategy implements CollisionStrategy {
-    private static final int MAX_COLLISIONS = 4;
     private static final float FACTOR = 1.2f;
     private final Vector2 windowDimensions;
     private final GameManager gameManager;

@@ -9,7 +9,7 @@ public class AIPaddle extends GameObject {
     private static final float THRESHOLD_FOR_MOVEMENT = 20;
     private final int  borderWidth;
     private final Vector2 windowDimensions;
-    private GameObject objectToFollow;
+    private final GameObject objectToFollow;
     public static final String AI_PAD_TAG = "AI paddle";
 
 

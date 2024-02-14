@@ -10,7 +10,7 @@ import danogl.util.Vector2;
 
 public class ExtraPaddle extends Paddle {
     public static final String EXTRA_PADDLE_TAG = "Extra Paddle";
-    private static Counter collisionCounter;
+    private final Counter collisionCounter;
 
     private final GameObjectCollection gameObjects;
 
@@ -24,8 +24,8 @@ public class ExtraPaddle extends Paddle {
      * @param renderable       The renderable representing the object. Can be null, in which case the
      *                         GameObject will not be rendered.
      * @param inputListener    TODO document
-     * @param windowDimensions
-     * @param disFromEnd
+     * @param windowDimensions window dimension of the game
+     * @param disFromEnd       represent the border width
      */
     public ExtraPaddle(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
                        UserInputListener inputListener, Vector2 windowDimensions, int disFromEnd
@@ -39,7 +39,7 @@ public class ExtraPaddle extends Paddle {
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
-        if (other.getTag() == Ball.BALL_TAG || other.getTag() == Puck.PUCK_TAG)
+        if (other.getTag().equals(Ball.BALL_TAG) || other.getTag().equals(Puck.PUCK_TAG))
             collisionCounter.decrement();
         System.out.println("coliision number " + (4 - collisionCounter.value()));
         if (collisionCounter.value() == 0) {

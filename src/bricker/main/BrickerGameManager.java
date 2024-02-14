@@ -46,6 +46,9 @@ public class BrickerGameManager extends GameManager {
     private static final float HALF = 0.5f;
     private static final float WINDOW_X_LEN = 700;
     private static final float WINDOW_Y_LEN = 500;
+    private static final int BALL_HITS_TO_RESET_CAMERA = 4;
+    //TODO document it
+    private static final int HIT_OFFSET = 1;
     //    private Counter lifeCounter = new Counter(INIT_LIVES);
 
     private Ball ball;
@@ -108,7 +111,7 @@ public class BrickerGameManager extends GameManager {
         StrategyManager strategyManager = new StrategyManager(gameObjects(), bricksCounter, imageReader,
                 soundReader, BALL_SPEED, puckList, BALL_RADIUS, heartDimentions, lives, HEART_IMG_PATH,
                 heartList, inputListener, windowDimentions, BORDER_WIDTH, createPaddleDimension(),
-                PADDLE_IMG_PATH, collisionCounter);
+                PADDLE_IMG_PATH, collisionCounter, ball, this);
         createBricks(imageReader, inputListener, windowDimentions, strategyManager.generateStrategies());
 //                new CollisionStrategy[]{new BasicCollisionStrategy(this.gameObjects(), bricksCounter),
 //                new AddPucksStrategty(gameObjects(),bricksCounter,imageReader,soundReader,BALL_SPEED,puckList,BALL_RADIUS)}
@@ -125,7 +128,15 @@ public class BrickerGameManager extends GameManager {
         super.update(deltaTime);
         checkPucks();
         checkHearts();
+        checkForResetCamera();
         checkForGameEnd();
+    }
+
+    private void checkForResetCamera() {
+        if (ChangeCameraStrategy.getCollisionCounterInHit() + BALL_HITS_TO_RESET_CAMERA + HIT_OFFSET ==
+                ball.getCollisionCounter()) {
+            this.setCamera(null);
+        }
     }
 
 
@@ -199,6 +210,7 @@ public class BrickerGameManager extends GameManager {
         aiPaddle.setCenter(
                 new Vector2(windowDimensions.x() / 2, BASIC_SPACE));
         gameObjects().addGameObject(aiPaddle);
+
     }
 
     private void createBorders(Vector2 windowDimensions) {

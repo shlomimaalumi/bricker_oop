@@ -40,6 +40,7 @@ public class Ball extends GameObject {
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         if (!other.getTag().equals(Heart.HEART_TAG)) {
+            System.out.println("ball collide with:" + other.getTag());
             super.onCollisionEnter(other, collision);
             Vector2 newVel = getVelocity().flipped(collision.getNormal());
             setVelocity(newVel);

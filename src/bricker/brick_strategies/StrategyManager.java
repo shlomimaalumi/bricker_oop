@@ -3,6 +3,7 @@ package bricker.brick_strategies;
 import java.awt.*;
 import java.util.ArrayList;
 
+import bricker.game_objects.Ball;
 import bricker.game_objects.Heart;
 import bricker.game_objects.Puck;
 import danogl.GameManager;
@@ -33,9 +34,11 @@ public class StrategyManager implements CollisionStrategy {
     private Vector2 windowDimensions;
     private int distFromEnd;
     private static Counter collisionCounter;
+    private final GameManager brickerGameManager;
     private Vector2 paddleDimensions;
     private String puddleImgPath;
     private UserInputListener inputListener;
+    private final Ball ball;
 
     public StrategyManager(GameObjectCollection gameObjects, Counter bricksCounter,
                            ImageReader imageReader, SoundReader soundReader, float ballSpeed,
@@ -46,7 +49,11 @@ public class StrategyManager implements CollisionStrategy {
                            Vector2 windowDimensions,
                            int distFromEnd,
                            Vector2 paddleDimensions,
-                           String puddleImgPath, Counter collisionCounter) {
+                           String puddleImgPath, Counter collisionCounter,
+
+
+
+                        Ball ball, GameManager brickerGameManager) {
         this.gameObjects = gameObjects;
         this.bricksCounter = bricksCounter;
         this.imageReader = imageReader;
@@ -64,6 +71,8 @@ public class StrategyManager implements CollisionStrategy {
         this.paddleDimensions = paddleDimensions;
         this.distFromEnd = distFromEnd;
         this.collisionCounter = collisionCounter;
+        this.ball = ball;
+        this.brickerGameManager = brickerGameManager;
     }
 
     public CollisionStrategy[] generateStrategies() {
@@ -86,7 +95,9 @@ public class StrategyManager implements CollisionStrategy {
     private CollisionStrategy extraPaddleStrategy() {
         return new ExtraPaddleStrategy(gameObjects, windowDimensions, inputListener, imageReader
                 , distFromEnd, paddleDimensions, puddleImgPath, bricksCounter,collisionCounter);
-
+    }
+    private CollisionStrategy changeCameraStrategy(){
+        return new ChangeCameraStrategy(gameObjects,bricksCounter,brickerGameManager,windowDimensions,ball);
     }
 
     @Override

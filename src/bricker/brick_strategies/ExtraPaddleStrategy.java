@@ -29,7 +29,6 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
     private final BasicCollisionStrategy basicCollision;
 
 
-
     public ExtraPaddleStrategy(GameObjectCollection gameObjects, Vector2 windowDimensions,
                                UserInputListener inputListener,
                                ImageReader imageReader, int disFromEnd, Vector2 paddleDimensions,
@@ -46,7 +45,6 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
             ExtraPaddleStrategy.collisionCounter = collisionCounter;
         }
         basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
-
 
 
     }

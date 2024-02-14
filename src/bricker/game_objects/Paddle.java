@@ -15,7 +15,6 @@ public class Paddle extends GameObject {
     public static final String PADDLE_TAG = "Paddle";
 
 
-
     /**
      * Construct a new GameObject instance.
      *
@@ -27,7 +26,7 @@ public class Paddle extends GameObject {
      * @param inputListener TODO document
      */
     public Paddle(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
-                  UserInputListener inputListener, Vector2 windowDimensions,int disFromEnd) {
+                  UserInputListener inputListener, Vector2 windowDimensions, int disFromEnd) {
         super(topLeftCorner, dimensions, renderable);
         this.inputListener = inputListener;
         this.windowDimensions = windowDimensions;
@@ -39,16 +38,16 @@ public class Paddle extends GameObject {
     public void update(float deltaTime) {
         super.update(deltaTime);
         Vector2 movementDir = Vector2.ZERO;
-        if(this.inputListener.isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (this.inputListener.isKeyPressed(KeyEvent.VK_LEFT)) {
             // We can only go left if we're less than ${minDistFromEdge} pixels away from the left edge
-            if((getCenter().x() - getDimensions().x()/2) - borderWidth > 0) {
+            if ((getCenter().x() - getDimensions().x() / 2) - borderWidth > 0) {
                 movementDir = movementDir.add(Vector2.LEFT);
             }
         }
 
-        if(this.inputListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
+        if (this.inputListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
             // We can only go right if we're less than ${minDistFromEdge} pixels away from the right edge
-            if((getCenter().x() + getDimensions().x()/2) +
+            if ((getCenter().x() + getDimensions().x() / 2) +
                     borderWidth < windowDimensions.x()) {
                 movementDir = movementDir.add(Vector2.RIGHT);
             }

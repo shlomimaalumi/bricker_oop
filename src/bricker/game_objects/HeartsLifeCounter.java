@@ -6,6 +6,7 @@ import danogl.collisions.Layer;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
+
 import java.util.Stack;
 
 public class HeartsLifeCounter extends GameObject {
@@ -13,7 +14,7 @@ public class HeartsLifeCounter extends GameObject {
     private final Vector2 topLeftCorner;
     private final GameObjectCollection gameObjects;
     private final Renderable heartImage;
-    private final Stack<Heart> heartsStack ;
+    private final Stack<Heart> heartsStack;
     private final Counter lives;
     private static final String HEART_COUNTER_TAG = "Heart counter";
 
@@ -21,48 +22,46 @@ public class HeartsLifeCounter extends GameObject {
     /**
      * Construct a new GameObject instance.
      *
-     * @param topLeftCorner Position of the object, in window coordinates (pixels).
-     *                      Note that (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Position of the object, in window coordinates (pixels). Note that (0,0) is the
+     *                      top-left corner of the window.
      * @param dimensions    Width and height in window coordinates.
-     * @param heartImage    The renderable representing the object. Can be null, in which case
-     *                      the GameObject will not be rendered.
+     * @param heartImage    The renderable representing the object. Can be null, in which case the GameObject
+     *                      will not be rendered.
      */
     public HeartsLifeCounter(Vector2 topLeftCorner, Vector2 dimensions, Renderable heartImage, Counter lives,
-    GameObjectCollection gameObjects) {
+                             GameObjectCollection gameObjects) {
         super(Vector2.ZERO, Vector2.ZERO, null);
-        this.heartSize=dimensions;
-        this.topLeftCorner=topLeftCorner;
-        this.heartImage=heartImage;
+        this.heartSize = dimensions;
+        this.topLeftCorner = topLeftCorner;
+        this.heartImage = heartImage;
         this.heartsStack = new Stack<>();
-        this.gameObjects=gameObjects;
-        for (int i=0;i<lives.value();i++)
-        {
+        this.gameObjects = gameObjects;
+        for (int i = 0; i < lives.value(); i++) {
             bulidHeartNumberI(i);
         }
         this.lives = lives;
         setTag(HEART_COUNTER_TAG);
     }
 
-    public void bulidHeartNumberI(int i)
-    {
+    public void bulidHeartNumberI(int i) {
         Vector2 curPosiotion = topLeftCorner.add(heartSize.multX(i).multY(0));
-        Heart heart = new Heart(curPosiotion,this.heartSize,heartImage,lives,gameObjects);
+        Heart heart = new Heart(curPosiotion, this.heartSize, heartImage, lives, gameObjects);
         heartsStack.push(heart);
         gameObjects.addGameObject(heart, Layer.UI);
     }
 
 
-    private void removeHeart(){
+    private void removeHeart() {
         Heart heart = heartsStack.pop();
         this.gameObjects.removeGameObject(heart, Layer.UI);
     }
 
     @Override
     public void update(float deltaTime) {
-        if (this.lives.value()> heartsStack.size()){
+        if (this.lives.value() > heartsStack.size()) {
             bulidHeartNumberI(heartsStack.size());
         }
-        if (this.lives.value()<heartsStack.size()){
+        if (this.lives.value() < heartsStack.size()) {
             removeHeart();
         }
     }

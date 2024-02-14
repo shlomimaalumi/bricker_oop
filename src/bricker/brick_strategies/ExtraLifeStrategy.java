@@ -25,7 +25,7 @@ public class ExtraLifeStrategy implements CollisionStrategy {
 
     public ExtraLifeStrategy(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, Vector2 heartDimensions, String heartImgPath,
-                             Counter livesCounter,ArrayList<Heart> heartsList) {
+                             Counter livesCounter, ArrayList<Heart> heartsList) {
         super();
         this.gameObjects = gameObjects;
         this.livesCounter = livesCounter;

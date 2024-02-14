@@ -1,6 +1,7 @@
 package bricker.brick_strategies;
 
 import java.util.ArrayList;
+
 import bricker.game_objects.Puck;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
@@ -10,6 +11,7 @@ import danogl.gui.SoundReader;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
+
 import java.util.Random;
 
 
@@ -28,7 +30,8 @@ public class AddPucksStrategty implements CollisionStrategy {
 
 
     public AddPucksStrategty(GameObjectCollection gameObjects, Counter bricksCounter,
-                             ImageReader imageReader, SoundReader soundReader, float ballSpeed, ArrayList<Puck> puckList, float ballSize) {
+                             ImageReader imageReader, SoundReader soundReader, float ballSpeed,
+                             ArrayList<Puck> puckList, float ballSize) {
         this.gameObjects = gameObjects;
         this.image = imageReader.readImage(PUCK_IMG_PATH, true);
         this.sound = soundReader.readSound(COLLISION_SOUND_PATH);

@@ -1,3 +1,8 @@
+/**
+ * A collision strategy implementation that triggers the creation of an extra life object upon collision.
+ * When a collision occurs with an object associated with this strategy, an extra life object is instantiated
+ * and added to the game.
+ */
 package bricker.brick_strategies;
 
 import bricker.game_objects.Heart;
@@ -7,7 +12,6 @@ import danogl.gui.ImageReader;
 import danogl.gui.rendering.ImageRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
-
 import java.util.ArrayList;
 
 public class ExtraLifeStrategy implements CollisionStrategy {
@@ -22,11 +26,20 @@ public class ExtraLifeStrategy implements CollisionStrategy {
     private final BasicCollisionStrategy basicCollision;
     private final ArrayList<Heart> heartsList;
 
-
+    /**
+     * Constructs an ExtraLifeStrategy object with the specified parameters.
+     *
+     * @param gameObjects     The collection of game objects in the game.
+     * @param bricksCounter   The counter tracking the number of bricks in the game.
+     * @param imageReader     The image reader used to load the image for the extra life object.
+     * @param heartDimensions The dimensions of the extra life object.
+     * @param heartImgPath    The file path to the image for the extra life object.
+     * @param livesCounter    The counter tracking the number of lives in the game.
+     * @param heartsList      The list of extra life objects in the game.
+     */
     public ExtraLifeStrategy(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, Vector2 heartDimensions, String heartImgPath,
                              Counter livesCounter, ArrayList<Heart> heartsList) {
-        super();
         this.gameObjects = gameObjects;
         this.livesCounter = livesCounter;
         this.image = imageReader.readImage(heartImgPath, true);
@@ -35,7 +48,13 @@ public class ExtraLifeStrategy implements CollisionStrategy {
         this.heartsList = heartsList;
     }
 
-
+    /**
+     * Handles collision events between game objects.
+     * Upon collision, an extra life object is created at the collision point and added to the game objects collection.
+     *
+     * @param thisObj  The game object on which the collision event is triggered.
+     * @param otherObj The game object colliding with 'thisObj'.
+     */
     @Override
     public void onCollision(GameObject thisObj, GameObject otherObj) {
         basicCollision.onCollision(thisObj, otherObj);
@@ -44,8 +63,5 @@ public class ExtraLifeStrategy implements CollisionStrategy {
                 gameObjects, HEART_VELOCITY);
         heartsList.add(heart);
         gameObjects.addGameObject(heart);
-
     }
-
-
 }

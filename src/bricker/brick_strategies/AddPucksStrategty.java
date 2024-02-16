@@ -16,9 +16,25 @@ import java.util.Random;
 
 
 public class AddPucksStrategty implements CollisionStrategy {
+    /**
+     * Path to the image file used for rendering the puck.
+     */
     private static final String PUCK_IMG_PATH = "assets/mockBall.png";
+
+    /**
+     * Path to the sound file played upon collision with the puck.
+     */
     private static final String COLLISION_SOUND_PATH = "assets/blop_cut_silenced.wav";
+
+    /**
+     * The ratio of puck dimensions to ball dimensions, used to determine the size of the puck relative to
+     * the ball.
+     */
     private final static float PUCK_RATIO_FROM_BALL = 0.75f;
+
+    /**
+     * The number of pucks added to the game upon collision.
+     */
     private static final int PUCKS_TO_ADD = 2;
     private final GameObjectCollection gameObjects;
     private final Renderable image;

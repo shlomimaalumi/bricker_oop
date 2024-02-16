@@ -15,12 +15,26 @@ import danogl.util.Vector2;
 import java.util.ArrayList;
 
 public class ExtraLifeStrategy implements CollisionStrategy {
+    /**
+     * Half value used for calculating the position of the heart object.
+     */
     private static final float HALF = 0.5f;
     private final ImageRenderable image;
     private final GameObjectCollection gameObjects;
     private final Vector2 heartDimensions;
+    /**
+     * Vertical velocity component for the heart object.
+     */
     private static final int VEL_Y = 100;
+
+    /**
+     * Horizontal velocity component for the heart object.
+     */
     private static final int VEL_X = 0;
+
+    /**
+     * Velocity vector for the heart object.
+     */
     private static final Vector2 HEART_VELOCITY = new Vector2(VEL_X, VEL_Y);
     private final Counter livesCounter;
     private final BasicCollisionStrategy basicCollision;

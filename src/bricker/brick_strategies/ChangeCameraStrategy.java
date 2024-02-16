@@ -14,11 +14,17 @@ import danogl.util.Counter;
 import danogl.util.Vector2;
 
 public class ChangeCameraStrategy implements CollisionStrategy {
+    /**
+     * Factor used for adjusting the window dimensions when changing the camera.
+     */
     private static final float FACTOR = 1.2f;
     private final Vector2 windowDimensions;
     private final GameManager gameManager;
     private final Ball ball;
     private final BasicCollisionStrategy basicCollision;
+    /**
+     * The last collision counter value when a camera change was triggered.
+     */
     private static int lastHit = Integer.MIN_VALUE;
 
     /**

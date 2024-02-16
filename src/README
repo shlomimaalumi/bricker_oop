@@ -1,0 +1,155 @@
+refael.nagosa,shlomi483
+208746297,212032205
+
+1.
+
+We used method 1: we will send the instance returned by the gameObjects() method to the constructor
+of BasicCollisionStrategy, save the instance as a field, and use it to delete the first parameter
+in the onCollision method.
+
+The advantages:
+
+We are not extending the BasicCollisionStrategy API
+
+We tell each method to handle the type of removal, for example if we want as an extension to the
+game that each method implement removal in a different way and with certain effects we can take
+care of this from any method and brickerManager will not have to intervene at all
+
+We can use within the strategy the methods of gameobjects and thus expand the flexibility of our
+strategy.
+
+The disadvantages: The brickerManager class relies on other classes that will perform the removal
+correctly, it has no way of verifying that the object was actually removed properly.
+
+
+2.
+
+The display of the player's life number is implemented through two classes: HeartsLifeCounter for
+graphical representation using hearts and NumericLifeCounter for numerical representation. both of
+the classes will have common counter with the manager so they can check the current life value.
+
+
+HeartsLifeCounter:
+
+Manages a collection of Heart objects, each representing a life.
+
+Initializes hearts based on the initial number of lives.
+
+Dynamically adds or removes hearts based on changes in the player's lives.
+
+Handles collision events with the paddle to increment the player's lives.
+
+
+
+NumericLifeCounter:
+
+Manages a TextRenderable to display the numeric representation of the player's lives.
+
+Updates the numeric value and color based on changes in the player's lives.
+
+Represents the numerical aspect of the player's remaining lives.
+
+
+In the BrickerGameManager class:
+
+HeartsLifeCounter and NumericLifeCounter instances are created to represent the player's lives both
+graphically and numerically.
+
+These counters are updated within the update method of BrickerGameManager based on changes in the
+player's lives.
+
+HeartsLifeCounter dynamically manages the graphical representation of hearts.
+
+NumericLifeCounter dynamically updates the numeric representation and color based on the remaining
+lives.
+
+
+3.
+
+AddPucks Strategy:
+
+This behavior adds additional pucks to the game when triggered by a collision event. Implemented
+through the AddPucksStrategy class. This class extends CollisionStrategy and creates and adds pucks
+to the game when a collision occurs. It utilizes the Puck class to represent additional pucks and
+adds them to the game using the GameObjectCollection. We saved the added pucks in a common list in
+the manager and we checked (in the update of the manager) if each puck fall downside. if so we
+removed it. We implemented a new class called Puck (extends Ball class) that handle a collision in
+the way puck should, and have the properties of puck.
+
+ExtraHeart Strategy:
+
+This behavior grants the player an extra life when triggered by a collision event. Implemented
+through the ExtraLifeStrategy class. Extends CollisionStrategy and creates and adds heart objects
+to represent extra lives. UWilizes the Heart class and adds them to the game using the
+GameObjectCollection. We saved the extra hearts in a common list in the manager and we checked
+(in the update of the manager) if each heart fall downside. if so we removed it.
+
+ExtraPaddle Strategy:
+
+This behavior adds an additional paddle to the game when triggered by a collision event. Implemented
+through the ExtraPaddleStrategy class. Extends CollisionStrategy and creates and adds an extra
+paddle to the game. Utilizes the ExtraPaddle class to represent the additional paddle and adds it
+to the game using the GameObjectCollection. We implemented a new class called ExtraPaddle
+(extends Paddle class) that take care of counting the amount of hits and extra paddle removing the
+extra paddle and set the location in the middle of the window.
+
+ChangeCamera Strategy:
+
+This behavior changes the camera's position or behavior when triggered by a collision event.
+Implemented through the ChangeCameraStrategy class. Extends CollisionStrategy and adjusts the
+camera's settings based on the collision event. Utilizes the GameManager class to access and
+manipulate the camera settings.
+
+
+4.
+
+The double behavior in the implementation involves the possibility of selecting two special
+strategies in succession without repetition. Here's how it's implemented within the StrategyFactory
+class:
+
+Logic for Selecting Special Strategies:
+
+The addSpecialStrategies method is responsible for randomly selecting and adding special collision
+strategies to the collisionStrategies list.
+
+It first determines the maximum index based on whether it's the last round of strategy selection
+(LAST_STRATEGIES_CHOOSE). If it is, the maximum index is adjusted to exclude the possibility of
+choosing the
+"double" behavior again.
+
+A random index is then generated within the range of possible special strategies (max_index), and
+the corresponding special strategy is added to the list.
+
+If the selected index is the one corresponding to the "double" behavior (index 4), the strategyNums
+variable is incremented to indicate the next round, and two more special strategies are added
+recursively. Limiting the Number of Special Behaviors:
+
+The number of special behaviors is limited by the constants SPECIAL_STRATEGIES_AMOUNT and
+SPECIAL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE.
+
+If the last round is reached, LAST_STRATEGIES_CHOOSE is set to limit the maximum index, ensuring
+that the
+"double" behavior is not chosen again.
+
+Recursion is used to add two special strategies if the "double" behavior is chosen, effectively
+doubling the number of special behaviors chosen in that round.
+
+This implementation ensures that the "double" behavior occurs only once per round, allowing for a
+varied but controlled selection of special strategies during gameplay. The design of the code
+provides flexibility for adding new special behaviors in the future while maintaining a balance in
+their occurrence during gameplay.
+
+
+5.
+
+in Heart class, we added a counter constructor. This is to add life when a heart falling from the
+sky meets the main paddle we can add to our life amount. We also added in the constructor a
+variable named game object of type gameCbjectCollections which will be able to remove the heart in
+case it is hit by the pedal
+
+In the constructor of the Brick class we originally had a CollisionStrategy object, so that you
+would call onCollision and fire the brick. In part 2, the API parameter in the constructor is
+changed to an array of CollisionStrategy so that we can call each of the onCollisions in case there
+are duplicate collisions
+
+The rest of the API remains as it was in part A without change.

@@ -3,7 +3,7 @@ package bricker.main;
 import danogl.components.CoordinateSpace;
 
 import bricker.brick_strategies.*;
-import bricker.game_objects.*;
+import bricker.gameobjects.*;
 
 import java.util.ArrayList;
 
@@ -515,7 +515,6 @@ public class BrickerGameManager extends GameManager {
         //TODO delete this comment
         String prompt = "";
         lives.decrement();
-        System.out.println(lives.value());
         if (lives.value() == 0) {
             prompt += LOSING_ANNOUNCEMENT;
             windowController.resetGame();

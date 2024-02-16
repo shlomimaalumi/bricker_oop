@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
@@ -48,9 +48,11 @@ public class HeartsLifeCounter extends GameObject {
     /**
      * Constructs a new HeartsLifeCounter instance.
      *
-     * @param topLeftCorner Top-left corner position of the counter, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Top-left corner position of the counter, in window coordinates (pixels). (0,0) is
+     *                      the top-left corner of the window.
      * @param dimensions    Size of each heart in window coordinates.
-     * @param heartImage    Renderable representing the heart image. Can be null if the counter should not be rendered.
+     * @param heartImage    Renderable representing the heart image. Can be null if the counter should not be
+     *                      rendered.
      * @param lives         Counter for tracking the player's remaining lives.
      * @param gameObjects   Collection of game objects in the scene.
      */

@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
@@ -55,10 +55,8 @@ public class ExtraPaddle extends Paddle {
     public void onCollisionEnter(GameObject other, Collision collision) {
         if (other.getTag().equals(Ball.BALL_TAG) || other.getTag().equals(Puck.PUCK_TAG))
             collisionCounter.decrement();
-        System.out.println("Collision number " + (4 - collisionCounter.value()));
         if (collisionCounter.value() == 0) {
             gameObjects.removeGameObject(this);
-            System.out.println("Removed from collision");
         }
     }
 
@@ -72,7 +70,6 @@ public class ExtraPaddle extends Paddle {
         super.update(deltaTime);
         if (collisionCounter.value() == 0) {
             gameObjects.removeGameObject(this);
-            System.out.println("Removed from update");
         }
     }
 }

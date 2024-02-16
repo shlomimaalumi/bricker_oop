@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
@@ -18,9 +18,11 @@ public class Puck extends Ball {
     /**
      * Constructs a new Puck instance.
      *
-     * @param topLeftCorner Position of the puck, in window coordinates (pixels). Note that (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Position of the puck, in window coordinates (pixels). Note that (0,0) is the
+     *                      top-left corner of the window.
      * @param dimensions    Dimensions of the puck in window coordinates.
-     * @param renderable    Renderable representing the puck. Can be null, in which case the GameObject will not be rendered.
+     * @param renderable    Renderable representing the puck. Can be null, in which case the GameObject will
+     *                      not be rendered.
      * @param sound         Sound that will be heard during a collision with the puck.
      */
     public Puck(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Sound sound) {

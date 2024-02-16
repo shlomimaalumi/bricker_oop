@@ -2,7 +2,7 @@ package bricker.brick_strategies;
 
 import java.util.ArrayList;
 
-import bricker.game_objects.Puck;
+import bricker.gameobjects.Puck;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
@@ -14,7 +14,10 @@ import danogl.util.Vector2;
 
 import java.util.Random;
 
-
+/**
+ * A collision strategy responsible for adding pucks to the game upon collision with certain game objects.
+ * This strategy creates multiple pucks with randomized velocities and adds them to the game world.
+ */
 public class AddPucksStrategty implements CollisionStrategy {
     /**
      * Path to the image file used for rendering the puck.
@@ -44,7 +47,17 @@ public class AddPucksStrategty implements CollisionStrategy {
     private final ArrayList<Puck> puckList;
     private final BasicCollisionStrategy basicCollision;
 
-
+    /**
+     * Constructs an AddPucksStrategy object with the specified parameters.
+     *
+     * @param gameObjects   The collection of game objects in the game.
+     * @param bricksCounter The counter tracking the number of bricks in the game.
+     * @param imageReader   The image reader used to load images for game objects.
+     * @param soundReader   The sound reader used to load sounds for game objects.
+     * @param ballSpeed     The speed of the ball in the game.
+     * @param puckList      The list of puck objects in the game.
+     * @param ballSize      The size of the ball in the game.
+     */
     public AddPucksStrategty(GameObjectCollection gameObjects, Counter bricksCounter,
                              ImageReader imageReader, SoundReader soundReader, float ballSpeed,
                              ArrayList<Puck> puckList, float ballSize) {
@@ -55,9 +68,15 @@ public class AddPucksStrategty implements CollisionStrategy {
         this.puckList = puckList;
         this.puckDimensions = new Vector2(ballSize, ballSize).mult(PUCK_RATIO_FROM_BALL);
         basicCollision = new BasicCollisionStrategy(gameObjects, bricksCounter);
-
     }
 
+    /**
+     * Handles collision events between game objects. Upon collision, this strategy creates multiple pucks
+     * with randomized velocities and adds them to the game world.
+     *
+     * @param thisObj  The game object on which the collision event is triggered.
+     * @param otherObj The game object colliding with 'thisObj'.
+     */
     @Override
     public void onCollision(GameObject thisObj, GameObject otherObj) {
         basicCollision.onCollision(thisObj, otherObj);
@@ -70,6 +89,11 @@ public class AddPucksStrategty implements CollisionStrategy {
         }
     }
 
+    /**
+     * Sets a random velocity for the given puck object.
+     *
+     * @param puck The puck object for which the velocity is set.
+     */
     private void setPuckVelocity(Puck puck) {
         Random random = new Random();
         double angle = random.nextDouble() * Math.PI;

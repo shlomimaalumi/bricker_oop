@@ -1,11 +1,6 @@
-/**
- * A collision strategy implementation that changes the camera perspective upon collision with the ball.
- * This strategy is responsible for adjusting the camera to follow the ball and widening the frame upon collision,
- * providing a dynamic viewing experience.
- */
 package bricker.brick_strategies;
 
-import bricker.game_objects.Ball;
+import bricker.gameobjects.Ball;
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
@@ -13,6 +8,11 @@ import danogl.gui.rendering.Camera;
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
+/**
+ * A collision strategy implementation that changes the camera perspective upon collision with the ball. This
+ * strategy is responsible for adjusting the camera to follow the ball and widening the frame upon collision,
+ * providing a dynamic viewing experience.
+ */
 public class ChangeCameraStrategy implements CollisionStrategy {
     /**
      * Factor used for adjusting the window dimensions when changing the camera.
@@ -69,8 +69,8 @@ public class ChangeCameraStrategy implements CollisionStrategy {
     }
 
     /**
-     * Handles collision events between game objects.
-     * Upon collision with the ball, this strategy triggers the camera adjustment if the camera is not already set.
+     * Handles collision events between game objects. Upon collision with the ball, this strategy triggers
+     * the camera adjustment if the camera is not already set.
      *
      * @param thisObj  The game object on which the collision event is triggered.
      * @param otherObj The game object colliding with 'thisObj'.

@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
@@ -31,9 +31,11 @@ public class Heart extends GameObject {
     /**
      * Constructs a new Heart instance.
      *
-     * @param topLeftCorner Position of the heart, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Position of the heart, in window coordinates (pixels). (0,0) is the top-left
+     *                      corner of the window.
      * @param dimensions    Width and height of the heart in window coordinates.
-     * @param renderable    The renderable representing the heart. Can be null if the heart should not be rendered.
+     * @param renderable    The renderable representing the heart. Can be null if the heart should not be
+     *                      rendered.
      * @param lives         Counter to keep track of the player's lives.
      * @param gameObjects   Collection of game objects in the scene.
      */
@@ -48,9 +50,11 @@ public class Heart extends GameObject {
     /**
      * Constructs a new Heart instance with an initial velocity.
      *
-     * @param topLeftCorner Position of the heart, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Position of the heart, in window coordinates (pixels). (0,0) is the top-left
+     *                      corner of the window.
      * @param dimensions    Width and height of the heart in window coordinates.
-     * @param renderable    The renderable representing the heart. Can be null if the heart should not be rendered.
+     * @param renderable    The renderable representing the heart. Can be null if the heart should not be
+     *                      rendered.
      * @param lives         Counter to keep track of the player's lives.
      * @param gameObjects   Collection of game objects in the scene.
      * @param velocity      Initial velocity of the heart.

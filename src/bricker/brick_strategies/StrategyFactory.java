@@ -1,13 +1,8 @@
-/**
- * A factory class responsible for generating collision strategies based on certain conditions.
- * This class dynamically creates collision strategies to introduce various gameplay dynamics and interactions
- * between game objects.
- */
 package bricker.brick_strategies;
 
-import bricker.game_objects.Ball;
-import bricker.game_objects.Heart;
-import bricker.game_objects.Puck;
+import bricker.gameobjects.Ball;
+import bricker.gameobjects.Heart;
+import bricker.gameobjects.Puck;
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
@@ -20,12 +15,43 @@ import danogl.util.Vector2;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * A factory class responsible for generating collision strategies based on certain conditions. This class
+ * dynamically creates collision strategies to introduce various gameplay dynamics and interactions between
+ * game objects.
+ */
 public class StrategyFactory implements CollisionStrategy {
+    /**
+     * Constant representing the increment to the strategy number for the next round of special strategies.
+     */
     private static final int NEXT_ROUND = 1;
+
+    /**
+     * Constant representing the initial value for choosing strategies.
+     */
     private static final int INITIAL_STRATEGIES_CHOOSE = 1;
+
+    /**
+     * Constant representing the value for the last round of choosing strategies without the possibility of a
+     * double strategy.
+     */
     private static final int LAST_STRATEGIES_CHOOSE = 3;
+
+    /**
+     * Constant representing the total number of special strategies available, including the possibility of a
+     * double strategy in a round.
+     */
     private static final int SPECIAL_STRATEGIES_AMOUNT = 5;
+
+    /**
+     * Constant representing the number of special strategies available in the last round, without the
+     * possibility of a double strategy.
+     */
     private static final int SPECIAL_STRATEGIES_AMOUNT_WITHOUT_DOUBLE = 4;
+    /**
+     * counter to count the amount of collisions of the ball with the extra paddle
+     */
+    private static Counter collisionCounter;
     private int strategyNums;
     private final GameObjectCollection gameObjects;
     private final Counter bricksCounter;
@@ -39,7 +65,6 @@ public class StrategyFactory implements CollisionStrategy {
     private final String imagePath;
     private final Vector2 windowDimensions;
     private final int distFromEnd;
-    private static Counter collisionCounter;
     private final ArrayList<Heart> heartsList;
     private final GameManager brickerGameManager;
     private final Vector2 paddleDimensions;
@@ -50,25 +75,25 @@ public class StrategyFactory implements CollisionStrategy {
     /**
      * Constructs a StrategyFactory object with the specified parameters.
      *
-     * @param gameObjects           The collection of game objects in the game.
-     * @param bricksCounter         The counter tracking the number of bricks in the game.
-     * @param imageReader           The image reader used to load images for game objects.
-     * @param soundReader           The sound reader used to load sounds for game objects.
-     * @param ballSpeed             The speed of the ball in the game.
-     * @param puckList              The list of puck objects in the game.
-     * @param ballSize              The size of the ball in the game.
-     * @param heartDimensions       The dimensions of the heart object.
-     * @param livesCounter          The counter tracking the number of lives in the game.
-     * @param imagePath             The file path to the image for the heart object.
-     * @param inputListener         The user input listener for controlling game objects.
-     * @param windowDimensions      The dimensions of the game window.
-     * @param distFromEnd           The distance from the bottom of the window to place game objects.
-     * @param paddleDimensions      The dimensions of the paddle object.
-     * @param paddleImgPath         The file path to the image for the paddle object.
-     * @param collisionCounter      The counter tracking the number of collisions.
-     * @param ball                  The ball object in the game.
-     * @param heartsList            The list of heart objects in the game.
-     * @param brickerGameManager   The game manager responsible for managing the game state.
+     * @param gameObjects        The collection of game objects in the game.
+     * @param bricksCounter      The counter tracking the number of bricks in the game.
+     * @param imageReader        The image reader used to load images for game objects.
+     * @param soundReader        The sound reader used to load sounds for game objects.
+     * @param ballSpeed          The speed of the ball in the game.
+     * @param puckList           The list of puck objects in the game.
+     * @param ballSize           The size of the ball in the game.
+     * @param heartDimensions    The dimensions of the heart object.
+     * @param livesCounter       The counter tracking the number of lives in the game.
+     * @param imagePath          The file path to the image for the heart object.
+     * @param inputListener      The user input listener for controlling game objects.
+     * @param windowDimensions   The dimensions of the game window.
+     * @param distFromEnd        The distance from the bottom of the window to place game objects.
+     * @param paddleDimensions   The dimensions of the paddle object.
+     * @param paddleImgPath      The file path to the image for the paddle object.
+     * @param collisionCounter   The counter tracking the number of collisions.
+     * @param ball               The ball object in the game.
+     * @param heartsList         The list of heart objects in the game.
+     * @param brickerGameManager The game manager responsible for managing the game state.
      */
     public StrategyFactory(GameObjectCollection gameObjects, Counter bricksCounter,
                            ImageReader imageReader, SoundReader soundReader, float ballSpeed,
@@ -111,7 +136,6 @@ public class StrategyFactory implements CollisionStrategy {
         } else {
             addSpecialStrategies(collisionStrategies);
         }
-
 
 
         return collisionStrategies;
@@ -188,8 +212,8 @@ public class StrategyFactory implements CollisionStrategy {
 
 
     /**
-     * Handles collision events between game objects.
-     * For each generated collision strategy, this method triggers the onCollision method to handle the collision.
+     * Handles collision events between game objects. For each generated collision strategy, this method
+     * triggers the onCollision method to handle the collision.
      *
      * @param thisObj  The game object on which the collision event is triggered.
      * @param otherObj The game object colliding with 'thisObj'.

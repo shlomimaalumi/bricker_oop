@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.util.Counter;
@@ -35,7 +35,8 @@ public class NumericLifeCounter extends GameObject {
     /**
      * Constructs a new NumericLifeCounter instance.
      *
-     * @param topLeftCorner Top-left corner position of the counter, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Top-left corner position of the counter, in window coordinates (pixels). (0,0) is
+     *                      the top-left corner of the window.
      * @param dimensions    Dimensions of the counter in window coordinates.
      * @param lives         Counter for tracking the player's remaining lives.
      * @param gameObjects   Collection of game objects in the scene.

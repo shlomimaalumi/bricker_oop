@@ -1,19 +1,20 @@
-/**
- * A collision strategy implementation that triggers the creation of an extra life object upon collision.
- * When a collision occurs with an object associated with this strategy, an extra life object is instantiated
- * and added to the game.
- */
 package bricker.brick_strategies;
 
-import bricker.game_objects.Heart;
+import bricker.gameobjects.Heart;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
 import danogl.gui.rendering.ImageRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
+
 import java.util.ArrayList;
 
+/**
+ * A collision strategy implementation that triggers the creation of an extra life object upon collision.
+ * When a collision occurs with an object associated with this strategy, an extra life object is instantiated
+ * and added to the game.
+ */
 public class ExtraLifeStrategy implements CollisionStrategy {
     /**
      * Half value used for calculating the position of the heart object.
@@ -63,8 +64,8 @@ public class ExtraLifeStrategy implements CollisionStrategy {
     }
 
     /**
-     * Handles collision events between game objects.
-     * Upon collision, an extra life object is created at the collision point and added to the game objects collection.
+     * Handles collision events between game objects. Upon collision, an extra life object is created at the
+     * collision point and added to the game objects collection.
      *
      * @param thisObj  The game object on which the collision event is triggered.
      * @param otherObj The game object colliding with 'thisObj'.

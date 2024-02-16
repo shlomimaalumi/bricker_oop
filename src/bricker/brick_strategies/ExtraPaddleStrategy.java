@@ -1,11 +1,7 @@
-/**
- * A collision strategy implementation that triggers the creation of an extra paddle object upon collision.
- * This strategy allows adding an extra paddle to the game under certain conditions, enhancing gameplay dynamics.
- */
 package bricker.brick_strategies;
 
-import bricker.game_objects.ExtraPaddle;
-import bricker.game_objects.Paddle;
+import bricker.gameobjects.ExtraPaddle;
+import bricker.gameobjects.Paddle;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.ImageReader;
@@ -14,23 +10,37 @@ import danogl.util.Counter;
 import danogl.util.Vector2;
 import danogl.gui.rendering.ImageRenderable;
 
+/**
+ * A collision strategy implementation that triggers the creation of an extra paddle object upon collision.
+ * This strategy allows adding an extra paddle to the game under certain conditions, enhancing gameplay
+ * dynamics.
+ */
 public class ExtraPaddleStrategy implements CollisionStrategy {
+    /**
+     * init em[pty counter  to count ball collisions with the extra paddle
+     */
     private static final int NO_COLLISIONS = 0;
+    /**
+     * max [pty counter value on collisions with the extra paddle
+     */
     private static final int MAX_COLLISIONS = 4;
+    /**
+     * counter to count the amount of collision of the extra paddle with the ball
+     */
+    private static Counter collisionCounter = null;
     private final GameObjectCollection gameObjects;
     private final Vector2 paddleLocation;
     private final Vector2 windowDimensions;
     private final UserInputListener inputListener;
     private final int disFromEnd;
     private final Vector2 paddleDimensions;
-    private static Counter collisionCounter = null;
     private final ImageRenderable image;
     private final BasicCollisionStrategy basicCollision;
 
     /**
      * Constructs an ExtraPaddleStrategy object with the specified parameters.
      *
-     * @param gameObjects       The collection of game objects in the game.
+     * @param gameObjects      The collection of game objects in the game.
      * @param windowDimensions The dimensions of the game window.
      * @param inputListener    The user input listener for controlling the paddle.
      * @param imageReader      The image reader used to load the image for the extra paddle object.
@@ -69,8 +79,8 @@ public class ExtraPaddleStrategy implements CollisionStrategy {
     }
 
     /**
-     * Handles collision events between game objects.
-     * Upon collision, if there are no previous collisions, an extra paddle object is created and added to the game.
+     * Handles collision events between game objects. Upon collision, if there are no previous collisions, an
+     * extra paddle object is created and added to the game.
      *
      * @param thisObj  The game object on which the collision event is triggered.
      * @param otherObj The game object colliding with 'thisObj'.

@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.gui.UserInputListener;
@@ -7,6 +7,12 @@ import danogl.util.Vector2;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * The `Paddle` class represents a game object that serves as a player-controlled paddle in a game scene. It
+ * extends the `GameObject` class and includes functionality for user input handling to move the paddle left
+ * or right within specified boundaries.
+ * The paddle has a defined movement speed, and its position is updated based on user input.
+ */
 public class Paddle extends GameObject {
     /**
      * Tag used to identify the paddle in the scene.

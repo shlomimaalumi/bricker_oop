@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import bricker.brick_strategies.CollisionStrategy;
 import danogl.GameObject;
@@ -25,9 +25,11 @@ public class Brick extends GameObject {
     /**
      * Constructs a new Brick instance.
      *
-     * @param topLeftCorner       Position of the brick, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner       Position of the brick, in window coordinates (pixels). (0,0) is the
+     *                            top-left corner of the window.
      * @param dimensions          Width and height of the brick in window coordinates.
-     * @param renderable          The renderable representing the brick. Can be null if the brick should not be rendered.
+     * @param renderable          The renderable representing the brick. Can be null if the brick should not
+     *                            be rendered.
      * @param collisionStrategies List of collision strategies applied to the brick.
      */
     public Brick(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,

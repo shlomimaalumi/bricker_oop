@@ -1,4 +1,4 @@
-package bricker.game_objects;
+package bricker.gameobjects;
 
 import danogl.GameObject;
 import danogl.collisions.Collision;
@@ -31,9 +31,11 @@ public class Ball extends GameObject {
     /**
      * Constructs a new Ball instance.
      *
-     * @param topLeftCorner Position of the ball, in window coordinates (pixels). (0,0) is the top-left corner of the window.
+     * @param topLeftCorner Position of the ball, in window coordinates (pixels). (0,0) is the top-left
+     *                      corner of the window.
      * @param dimensions    Width and height of the ball in window coordinates.
-     * @param renderable    The renderable representing the ball. Can be null if the ball should not be rendered.
+     * @param renderable    The renderable representing the ball. Can be null if the ball should not be
+     *                      rendered.
      * @param sound         The sound played during a collision.
      */
     public Ball(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Sound sound) {
@@ -52,7 +54,6 @@ public class Ball extends GameObject {
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         if (!other.getTag().equals(Heart.HEART_TAG)) {
-            System.out.println("Ball collided with: " + other.getTag());
             super.onCollisionEnter(other, collision);
             Vector2 newVel = getVelocity().flipped(collision.getNormal());
             setVelocity(newVel);

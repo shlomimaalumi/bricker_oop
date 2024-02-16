@@ -1,12 +1,11 @@
-/**
- * An interface defining collision behavior between game objects.
- * Implementations of this interface are responsible for defining what happens
- * when two game objects collide.
- */
 package bricker.brick_strategies;
 
 import danogl.GameObject;
 
+/**
+ * An interface defining collision behavior between game objects. Implementations of this interface are
+ * responsible for defining what happens when two game objects collide.
+ */
 public interface CollisionStrategy {
 
     /**
